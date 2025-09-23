@@ -1,5 +1,5 @@
 "use server"
-/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { FieldValues } from "react-hook-form"
 
 export const registerUser=async(userData:FieldValues)=>{
