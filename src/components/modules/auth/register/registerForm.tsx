@@ -13,6 +13,9 @@ const RegisterForm = () => {
         resolver:zodResolver(RegisterValidation)
     })
     
+    const password=form.watch("password")
+    const passwordConfirm=form.watch("passwordConfirm")
+
 const onSubmit:SubmitHandler<FieldValues>=(data)=>{
     console.log(data)
 }
@@ -80,12 +83,14 @@ const onSubmit:SubmitHandler<FieldValues>=(data)=>{
               <FormControl className="mx-auto ">
                 <Input className="text-black bg-white" type="password" placeholder="repeated your password " {...field} value={field.value || ''} />
               </FormControl>
-              
-              <FormMessage />
+              {
+                passwordConfirm && password !== passwordConfirm ? <FormMessage> password do not match</FormMessage> : <FormMessage/>
+              }
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button
+         disabled={ password !== passwordConfirm} type="submit">Submit</Button>
       </form>
     </Form>
         </div>
