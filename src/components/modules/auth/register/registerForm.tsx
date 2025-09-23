@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { RegisterValidation } from "./registerValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { registerUser } from "@/services/authServices";
+import { toast } from "sonner";
 
 
 const RegisterForm = () => {
@@ -13,11 +15,22 @@ const RegisterForm = () => {
         resolver:zodResolver(RegisterValidation)
     })
     
+    const {formState:{isSubmitting}}=form
+
     const password=form.watch("password")
     const passwordConfirm=form.watch("passwordConfirm")
 
-const onSubmit:SubmitHandler<FieldValues>=(data)=>{
-    console.log(data)
+const onSubmit:SubmitHandler<FieldValues>=async(data)=>{
+    try {
+      const res = await registerUser(data)
+      if(res?.success){
+        toast.success(res?.message)
+      }else{
+        toast.error(res?.message)
+      }
+    } catch (error:any) {
+      console.log(error)
+    }
 }
 
     return (
@@ -90,7 +103,9 @@ const onSubmit:SubmitHandler<FieldValues>=(data)=>{
           )}
         />
         <Button
-         disabled={ password !== passwordConfirm} type="submit">Submit</Button>
+         disabled={password !== passwordConfirm && isSubmitting} type="submit" className="w-full">{isSubmitting?(<div className="flex items-center justify-center min-h-screen">
+      <div className="w-8 h-8 border-8 border-white border-dotted rounded-full animate-spin"></div>
+    </div>):"submit"}</Button>
       </form>
     </Form>
         </div>
