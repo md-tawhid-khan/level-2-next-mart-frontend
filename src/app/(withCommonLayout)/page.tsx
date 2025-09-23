@@ -1,7 +1,10 @@
 import { Button } from "@/components/ui/button";
+import { getCurrentUser } from "@/services/authServices";
 
 
-const HomePage = () => {
+const HomePage =async() => {
+  const user= await getCurrentUser()
+  // console.log(user)
   return (
     <div className="text-center mt-10">
        <Button>click me </Button>
