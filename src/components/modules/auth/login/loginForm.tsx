@@ -1,4 +1,5 @@
 "use client";
+import ReCAPTCHA from "react-google-recaptcha";
 import Logo from "@/assets/svgs/logo";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +17,7 @@ import { loginUser,} from "@/services/authServices";
 import { toast } from "sonner";
 import { LoginValidation } from "./loginValidation";
 
+
 const LoginForm = () => {
   const form = useForm({
     resolver: zodResolver(LoginValidation),
@@ -25,11 +27,15 @@ const LoginForm = () => {
     formState: { isSubmitting },
   } = form;
 
- 
+  const onChange=(value)=>{
+     console.log('captcha value',value)
+  }
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
+    
       const res = await loginUser(data);
-      console.log({res})
+      // console.log({res})
       if (res?.success) {
         toast.success(res?.message);
       } else {
@@ -53,7 +59,9 @@ const LoginForm = () => {
         </div>
       </div>
       <div className="max-w-md text-blue-400">
+      
         <Form {...form}>
+          
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
            
             <FormField
@@ -96,6 +104,11 @@ const LoginForm = () => {
                 </FormItem>
               )}
             />
+ 
+               <ReCAPTCHA
+    sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY!}
+    onChange={onChange}
+  />,
             
             <Button
               disabled={isSubmitting}
@@ -111,7 +124,9 @@ const LoginForm = () => {
               )}
             </Button>
           </form>
+         
         </Form>
+             
       </div>
     </div>
   );

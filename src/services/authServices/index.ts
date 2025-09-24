@@ -16,7 +16,7 @@ export const registerUser=async(userData:FieldValues)=>{
         })
          const result=await res.json()
           if(result?.success){
-            (await cookies()).set("accessToken",result.data.accessToken)
+            (await cookies()).set("accessToken",result?.data?.accessToken)
         }
         return result
    } catch (error:any) {
@@ -38,7 +38,7 @@ export const loginUser=async(userData:FieldValues)=>{
 
         const result=await res.json()
         if(result?.success){
-            (await cookies()).set("accessToken",result.data.accessToken)
+            (await cookies()).set("accessToken",result?.data?.accessToken)
         }
         return result
    } catch (error:any) {
@@ -48,6 +48,15 @@ export const loginUser=async(userData:FieldValues)=>{
 
 export const getCurrentUser=async()=>{
    const accessToken=(await cookies()).get('accessToken')?.value;
-   const user=jwt_decode(accessToken as any)
+   if(!accessToken){
+    return null
+   }
+   try {
+    const user=jwt_decode(accessToken as any)
    return user
+   } catch (error) {
+     console.error("Invalid token", error);
+    return null;
+   }
+   
 }
