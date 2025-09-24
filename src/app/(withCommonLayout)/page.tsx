@@ -1,10 +1,12 @@
+"use client"
 import { Button } from "@/components/ui/button";
-import { getCurrentUser } from "@/services/authServices";
+import { useUser } from "@/context/userContext";
 
 
-const HomePage =async() => {
-  const user= await getCurrentUser()
-  // console.log(user)
+
+const HomePage =() => {
+ const user=useUser()
+  console.log(user)
   return (
     <div className="text-center mt-10">
        <Button>click me </Button>

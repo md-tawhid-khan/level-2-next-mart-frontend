@@ -14,8 +14,11 @@ export const registerUser=async(userData:FieldValues)=>{
             },
             body:JSON.stringify(userData)
         })
-
-        return res.json()
+         const result=await res.json()
+          if(result?.success){
+            (await cookies()).set("accessToken",result.data.accessToken)
+        }
+        return result
    } catch (error:any) {
     return Error(error)
    }
@@ -37,7 +40,6 @@ export const loginUser=async(userData:FieldValues)=>{
         if(result?.success){
             (await cookies()).set("accessToken",result.data.accessToken)
         }
-
         return result
    } catch (error:any) {
     return Error(error)
