@@ -1,3 +1,4 @@
+'use client'
 import { Heart, LogOut, ShoppingBag } from "lucide-react";
 import { Button } from "../ui/button";
 import Logo from "@/assets/svgs/logo";
@@ -5,23 +6,33 @@ import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
+  
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
+  
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
+  
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { logout } from "@/services/authServices";
+import { useUser } from "@/context/userContext";
 
 
 
 export default function Navbar() {
+
+  const {user,setIsLoading}=useUser()
+
+ 
+ 
+
+const handleLogOut=async()=>{
+  await logout()
+  setIsLoading(true)
+}
+
   return (
     <header className="border-b w-full">
       <div className="container flex justify-between items-center mx-auto h-16 px-3">
@@ -43,17 +54,13 @@ export default function Navbar() {
           <Button variant="outline" className="rounded-full p-0 size-10">
             <ShoppingBag />
           </Button>
-          <Link href="/login">
-          <Button variant="outline" className="rounded-full p-2 ">
-            log in 
-          </Button>
-          </Link>
-          <Link href="/create-shop">
+          {
+            user? <>
+        <Link href="/create-shop">
           <Button variant="outline" className="rounded-full p-2 ">
             create shop
           </Button>
           </Link>
-
 <DropdownMenu>
   <DropdownMenuTrigger><Avatar>
   <AvatarImage src="https://github.com/shadcn.png" />
@@ -66,10 +73,17 @@ export default function Navbar() {
     <DropdownMenuItem>dashboard</DropdownMenuItem>
     <DropdownMenuItem>my shop</DropdownMenuItem>
     <DropdownMenuSeparator />
-    <DropdownMenuItem><LogOut/>log out</DropdownMenuItem>
+    <DropdownMenuItem className="bg-red-500 cursor-pointer" onClick={handleLogOut}>
+      <LogOut/>log out
+      </DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
-
+ </> :   <Link href="/login">
+          <Button variant="outline" className="rounded-full p-2 ">
+            log in 
+          </Button>         
+          </Link>
+          }
         </nav>
       </div>
     </header>
