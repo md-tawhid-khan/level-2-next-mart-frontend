@@ -13,29 +13,43 @@ import {
 import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginUser,} from "@/services/authServices";
+import { loginUser, recaptchaTokenVerification,} from "@/services/authServices";
 import { toast } from "sonner";
 import { LoginValidation } from "./loginValidation";
+
+import { useState } from "react";
 
 
 const LoginForm = () => {
   const form = useForm({
     resolver: zodResolver(LoginValidation),
   });
+  
+  const [recaptcha,setRecaptcha]=useState(false)
 
   const {
     formState: { isSubmitting },
   } = form;
 
-  const onChange=(value)=>{
-     console.log('captcha value',value)
+  const onChange=async(value : string | null )=>{
+
+      try {
+        const res=await recaptchaTokenVerification(value!)
+      
+        if(res.success){
+            setRecaptcha(res.success)
+        }
+      } catch (error) {
+         console.log(error)
+      }
   }
+
+
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
     
       const res = await loginUser(data);
-      // console.log({res})
       if (res?.success) {
         toast.success(res?.message);
       } else {
@@ -111,7 +125,7 @@ const LoginForm = () => {
   />,
             
             <Button
-              disabled={isSubmitting}
+              disabled={ recaptcha ? false : true}
               type="submit"
               className="w-full"
             >

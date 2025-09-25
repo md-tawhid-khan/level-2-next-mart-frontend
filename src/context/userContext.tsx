@@ -1,6 +1,6 @@
+
 import { getCurrentUser } from "@/services/authServices";
 import { IUser } from "@/types";
-import { error } from "console";
 import { createContext, Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 
 interface IUserProvidersValues{
@@ -43,3 +43,4 @@ export const useUser=()=>{
 }
 
 export default UserProvider;
+
