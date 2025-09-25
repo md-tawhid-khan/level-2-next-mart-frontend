@@ -15,6 +15,7 @@ import { RegisterValidation } from "./registerValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerUser } from "@/services/authServices";
 import { toast } from "sonner";
+import Link from "next/link";
 
 const RegisterForm = () => {
   const form = useForm({
@@ -154,6 +155,8 @@ const RegisterForm = () => {
             </Button>
           </form>
         </Form>
+
+          <div className="mt-4 flex gap-3"><p>do you have any account</p> <Link href='/login' className="underline">login</Link> </div>
       </div>
     </div>
   );

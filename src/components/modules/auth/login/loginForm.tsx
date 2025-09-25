@@ -18,6 +18,7 @@ import { toast } from "sonner";
 import { LoginValidation } from "./loginValidation";
 
 import { useState } from "react";
+import Link from "next/link";
 
 
 const LoginForm = () => {
@@ -66,7 +67,7 @@ const LoginForm = () => {
       <div className="flex items-center space-x-4">
         <Logo />
         <div>
-          <h1 className="text-xl font-semibold">Register</h1>
+          <h1 className="text-xl font-semibold">Log in</h1>
           <p className="text-sm font-extralight">
             join us today and start your jurney
           </p>
@@ -141,6 +142,10 @@ const LoginForm = () => {
          
         </Form>
              
+             <div className="mt-4 flex gap-3">
+              <p>do not have any account</p>
+               <Link href='/register' className="underline">register</Link> 
+               </div>
       </div>
     </div>
   );
