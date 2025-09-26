@@ -5,9 +5,13 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea"
 import NMImageUploader from "@/components/ui/core/NMImageUploader";
+import { useState } from "react";
 
 
 const CreateShopForm = () => {
+
+  const [imageFile,setImageFile]=useState<File[] | [] >([])
+
     const form =useForm()
     const onSubmit=(data)=>{
         console.log(data)
@@ -237,7 +241,7 @@ const CreateShopForm = () => {
                 </FormItem>
               )}
             /> 
-            <NMImageUploader/> 
+            <NMImageUploader imageFile={imageFile} setImageFile={setImageFile}/> 
             
             </div>  
             <Button
