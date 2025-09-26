@@ -6,11 +6,13 @@ import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea"
 import NMImageUploader from "@/components/ui/core/NMImageUploader";
 import { useState } from "react";
+import ImagePreviewer from "@/components/ui/core/NMImageUploader/imagePreviewer";
 
 
 const CreateShopForm = () => {
 
-  const [imageFile,setImageFile]=useState<File[] | [] >([])
+  const [imageFiles,setImageFiles]=useState<File[] | [] >([])
+  const [imagePreview,setImagePreview]=useState<string[] | [] >([])
 
     const form =useForm()
     const onSubmit=(data)=>{
@@ -241,8 +243,10 @@ const CreateShopForm = () => {
                 </FormItem>
               )}
             /> 
-            <NMImageUploader imageFile={imageFile} setImageFile={setImageFile}/> 
-            
+            {
+              imagePreview.length>0 ?  <ImagePreviewer setImageFiles={setImageFiles} setImagePreview={setImagePreview} imagePreview={imagePreview} className="mt-8"/> :
+               <NMImageUploader className="mt-8" setImagePreview={setImagePreview} setImageFile={setImageFiles}/> 
+            }
             </div>  
             <Button
               type="submit"
