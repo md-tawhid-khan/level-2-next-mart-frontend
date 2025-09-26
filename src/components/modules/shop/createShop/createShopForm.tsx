@@ -9,6 +9,7 @@ import { useState } from "react";
 import ImagePreviewer from "@/components/ui/core/NMImageUploader/imagePreviewer";
 import { createShop } from "@/services/shop";
 import { toast } from "sonner";
+import { TShop } from "@/types";
 
 
 const CreateShopForm = () => {
@@ -20,7 +21,7 @@ const CreateShopForm = () => {
      
     const {formState:{isSubmitting}}=form
 
-    const onSubmit=async(data)=>{
+    const onSubmit=async(data:TShop)=>{
 
       const servicesOffered=data?.servicesOffered.split(",").map((service:string)=>service.trim()).filter((service:string)=>service !== "")
 
