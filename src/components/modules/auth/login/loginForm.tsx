@@ -19,18 +19,22 @@ import { LoginValidation } from "./loginValidation";
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 
 
 const LoginForm = () => {
   const form = useForm({
     resolver: zodResolver(LoginValidation),
-  });
-  
+  });  
   const [recaptcha,setRecaptcha]=useState(false)
-
   const {
     formState: { isSubmitting },
   } = form;
+
+  const searchParams=useSearchParams()
+  const redirect=searchParams?.get("redirect")
+  const route=useRouter()
+
 
   const onChange=async(value : string | null )=>{
 
@@ -53,6 +57,11 @@ const LoginForm = () => {
       const res = await loginUser(data);
       if (res?.success) {
         toast.success(res?.message);
+        if(redirect){
+          route.push(redirect)
+        }else{
+          route.push('/')
+        }
       } else {
         toast.error(res?.message);
       }
