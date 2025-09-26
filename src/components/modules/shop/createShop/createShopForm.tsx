@@ -7,6 +7,8 @@ import { Textarea } from "@/components/ui/textarea"
 import NMImageUploader from "@/components/ui/core/NMImageUploader";
 import { useState } from "react";
 import ImagePreviewer from "@/components/ui/core/NMImageUploader/imagePreviewer";
+import { createShop } from "@/services/shop";
+import { toast } from "sonner";
 
 
 const CreateShopForm = () => {
@@ -15,8 +17,32 @@ const CreateShopForm = () => {
   const [imagePreview,setImagePreview]=useState<string[] | [] >([])
 
     const form =useForm()
-    const onSubmit=(data)=>{
-        console.log(data)
+     
+    const {formState:{isSubmitting}}=form
+
+    const onSubmit=async(data)=>{
+
+      const servicesOffered=data?.servicesOffered.split(",").map((service:string)=>service.trim()).filter((service:string)=>service !== "")
+
+      const modifyData={
+        ...data,servicesOffered:servicesOffered,establishedYear:Number(data?.establishedYear)
+      }
+
+        try {
+          const formData=new FormData()
+          formData.append('data',JSON.stringify(modifyData))
+          formData.append('logo', imageFiles[0] as File )
+
+          const res= await createShop(formData)
+          console.log(res)
+           
+          if(res.success){
+            toast.success(res.message)
+          }
+
+        } catch (error) {
+          console.error(error)
+        }
     }
     return (
         <div className="borde-2 border-gray-300 rounded-xl flex flex-col   gap-10 max-w-md w-full p-5 bg-gray-100 ">
@@ -248,11 +274,21 @@ const CreateShopForm = () => {
                <NMImageUploader className="mt-8" setImagePreview={setImagePreview} setImageFile={setImageFiles}/> 
             }
             </div>  
-            <Button
+      
+              <Button
+              disabled={isSubmitting? true : false}
               type="submit"
               className="w-full"
-            > submit</Button>
-            
+            >
+              {isSubmitting ? (
+                <div className="flex items-center justify-center min-h-screen">
+                  <div className="w-8 h-8 border-8 border-white border-dotted rounded-full animate-spin"></div>
+                </div>
+              ) : (
+                "create"
+              )}
+            </Button>
+    
           </form>
         </Form>
         </div>
