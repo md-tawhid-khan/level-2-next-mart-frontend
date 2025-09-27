@@ -20,6 +20,7 @@ import { LoginValidation } from "./loginValidation";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useUser } from "@/context/userContext";
 
 
 const LoginForm = () => {
@@ -30,6 +31,8 @@ const LoginForm = () => {
   const {
     formState: { isSubmitting },
   } = form;
+
+  const {setIsLoading}=useUser()
 
   const searchParams=useSearchParams()
   const redirect=searchParams?.get("redirect")
@@ -57,6 +60,7 @@ const LoginForm = () => {
       const res = await loginUser(data);
       if (res?.success) {
         toast.success(res?.message);
+        setIsLoading(true)
         if(redirect){
           route.push(redirect)
         }else{

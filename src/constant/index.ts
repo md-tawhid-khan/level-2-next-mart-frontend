@@ -1,0 +1,1 @@
+export const privateRoutes=['/login','/create-shop','/admin','/admin/:page','/user','/user/:page']
