@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import {  useForm } from "react-hook-form";
+import {   FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea"
 import NMImageUploader from "@/components/ui/core/NMImageUploader";
 import { useState } from "react";
@@ -21,9 +21,9 @@ const CreateShopForm = () => {
      
     const {formState:{isSubmitting}}=form
 
-    const onSubmit=async(data:TShop)=>{
-
-      const servicesOffered=data?.servicesOffered.split(",").map((service:string)=>service.trim()).filter((service:string)=>service !== "")
+    const onSubmit:SubmitHandler<FieldValues>=async(data:TShop)=>{
+       console.log(data)
+      const servicesOffered=data?.servicesOffered!.split(",").map((service:string)=>service.trim()).filter((service:string)=>service !== "")
 
       const modifyData={
         ...data,servicesOffered:servicesOffered,establishedYear:Number(data?.establishedYear)

@@ -1,15 +1,18 @@
 export type TShop ={
-    servicesOffered:string;
-    establishedYear:string;
-    taxIdentificationNumber:string;
-    website:string;
-    contactNumber:string;
-    address:string;
-    shopName:string;
-    socialMediaLinks:{
-        facebook:string;
-        twitter:string;
-        instagram:string;
-    }
-    businessLicenseNumber:string;
+  address?: string
+  businessLicenseNumber?: string
+  contactNumber?: string
+  establishedYear?: string
+  servicesOffered?: string
+  shopName?: string
+  socialMediaLinks?: SocialMediaLinks
+  taxIdentificationNumber?: string
+  website?: string
 }
+
+export type SocialMediaLinks ={
+  facebook?: string
+  twitter?: string
+  instagram?: string
+}
+

@@ -2,41 +2,32 @@
 import { Button } from "@/components/ui/button";
 import NMImageUploader from "@/components/ui/core/NMImageUploader";
 import ImagePreviewer from "@/components/ui/core/NMImageUploader/imagePreviewer";
-import {
-  Dialog,
-  DialogContent,
-
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog" 
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import createCategory from "@/services/category";
+import { CreateBrand } from "@/services/brand";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-type TCategory={
-  name?:string ;
-  description?:string
+
+export type TBrand ={
+    name?:string;
 }
 
-const CreateCategoryModal = () => {
-    const [imageFiles,setImageFiles]=useState<File[] | [] >([])
-     const [imagePreview,setImagePreview]=useState<string[] | [] >([])
-
+const CreateBrandModel = () => {
     const form=useForm()
+    const {formState:{isSubmitting}}=form ;
+        const [imageFiles,setImageFiles]=useState<File[] | [] >([])
+         const [imagePreview,setImagePreview]=useState<string[] | [] >([])
+    
 
-    const {formState:{isSubmitting} }=form ;
-
-    const onSubmit:SubmitHandler<FieldValues>=async(data:TCategory)=>{
+    const onSubmit:SubmitHandler<FieldValues>=async(data:TBrand)=>{
         const formData=new FormData()
         formData.append('data',JSON.stringify(data))
-        formData.append('icon',imageFiles[0] as File)
+        formData.append('logo',imageFiles[0] as File)
         try {
-           const res=await createCategory(formData)
+           const res=await CreateBrand(formData)
            if(res.success){
             toast.success(res.message)
             form.reset()
@@ -46,16 +37,17 @@ const CreateCategoryModal = () => {
         } catch (error) {
           console.log(error)
         }
+       
     }
 
     return (
-        <Dialog>
+         <Dialog>
   <DialogTrigger asChild>
-          <Button  className="cursor-pointer">Create Category</Button>
+          <Button  className="cursor-pointer">Create Brand</Button>
         </DialogTrigger>
   <DialogContent>
     <DialogHeader>
-      <DialogTitle>Create Product Category </DialogTitle>
+      <DialogTitle>Create Product Brand </DialogTitle>
     
     </DialogHeader>
     <Form {...form}>
@@ -67,12 +59,13 @@ const CreateCategoryModal = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>category name</FormLabel>
+                  <FormLabel>Brand name</FormLabel>
                   <FormControl className="mx-auto ">
                     <Input
                       className="text-black bg-white"
                       type="text"
-                      placeholder="give category name"
+                    
+                      placeholder="give brand name"
                       {...field}
                       value={field.value || ""}
                     />
@@ -81,36 +74,14 @@ const CreateCategoryModal = () => {
                   <FormMessage />
                 </FormItem>
               )}
-            />
-
-<div className="flex items-center justify-between">
-             <FormField
-              control={form.control}
-              name="description"
-              
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>category description</FormLabel>
-                  <FormControl className="mx-auto ">
-                   
-                    <Textarea className="text-black bg-white h-36"
-                     
-                      placeholder="give category description"
-                      {...field}
-                      value={field.value || ""} />
-                                      </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> 
-            {
+               />
+         <div>
+              {
               imagePreview.length>0 ?  <ImagePreviewer setImageFiles={setImageFiles} setImagePreview={setImagePreview} imagePreview={imagePreview} className="mt-8"/> :
                <NMImageUploader className="mt-8" setImagePreview={setImagePreview} setImageFile={setImageFiles}/> 
             }
+         </div>
 
-            </div>
-            
             <Button
               disabled={isSubmitting}
               type="submit"
@@ -133,4 +104,4 @@ const CreateCategoryModal = () => {
     );
 };
 
-export default CreateCategoryModal;
+export default CreateBrandModel;
