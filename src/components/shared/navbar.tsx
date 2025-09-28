@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { logout } from "@/services/authServices";
+import { getCurrentUser, logout } from "@/services/authServices";
 import { useUser } from "@/context/userContext";
 import { usePathname, useRouter } from "next/navigation";
 import { privateRoutes } from "@/constant";
@@ -29,7 +29,8 @@ export default function Navbar() {
   const pathname=usePathname();
   const router=useRouter();
 
-
+  
+  
 
 const handleLogOut=async()=>{
   await logout()
@@ -76,7 +77,7 @@ const handleLogOut=async()=>{
     <DropdownMenuLabel>My Account</DropdownMenuLabel>
     <DropdownMenuSeparator />
     <DropdownMenuItem>Profile</DropdownMenuItem>
-    <DropdownMenuItem>dashboard</DropdownMenuItem>
+    <DropdownMenuItem><Link href={`/${user?.role}/dashboard`}>dashboard</Link></DropdownMenuItem>
     <DropdownMenuItem>my shop</DropdownMenuItem>
     <DropdownMenuSeparator />
     <DropdownMenuItem className="bg-red-500 cursor-pointer" onClick={handleLogOut}>
