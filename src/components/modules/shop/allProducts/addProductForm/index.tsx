@@ -90,69 +90,22 @@ export default function AddProductsForm() {
     appendSpec({ key: "", value: "" });
   };
 
-  // console.log(specFields);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       const [categoriesData, brandsData] = await Promise.all([
-//         getAllCategories(),
-//         getAllBrands(),
-//       ]);
-
-    //   setCategories(categoriesData?.data);
-    //   setBrands(brandsData?.data);
-    // };
-
-//     fetchData();
-//   }, []);
-
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-   console.log(data)
+  //  console.log(data)
 
-    // const availableColors = data.availableColors.map(
-    //   (color: { value: string }) => color.value
-    // );
+    const availableColors=data?.availableColors.map((color:{value:string})=>(color.value))
 
-    // const keyFeatures = data.keyFeatures.map(
-    //   (feature: { value: string }) => feature.value
-    // );
+    const keyFeatures=data?.keyFeatures.map((feature:{value:string})=>feature.value)
 
-    // const specification: { [key: string]: string } = {};
-    // data.specification.forEach(
-    //   (item: { key: string; value: string }) =>
-    //     (specification[item.key] = item.value)
-    // );
+    const specification:{[key:string]:string}={} ;
 
-    // console.log({ availableColors, keyFeatures, specification });
+    data?.specification.forEach((item:{key:string;value:string})=>(specification[item.key]=item.value))
 
-    // const modifiedData = {
-    //   ...data,
-    //   availableColors,
-    //   keyFeatures,
-    //   specification,
-    //   price: parseFloat(data.price),
-    //   stock: parseInt(data.stock),
-    //   weight: parseFloat(data.stock),
-    // };
+    console.log({ availableColors,keyFeatures,specification});
 
-    // const formData = new FormData();
-    // formData.append("data", JSON.stringify(modifiedData));
+   
 
-    // for (const file of imageFiles) {
-    //   formData.append("images", file);
-    // }
-    // try {
-    //   const res = await addProduct(formData);
-
-    //   if (res.success) {
-    //     toast.success(res.message);
-    //     router.push("/user/shop/products");
-    //   } else {
-    //     toast.error(res.message);
-    //   }
-    // } catch (err: any) {
-    //   console.error(err);
-    // }
+   
   };
 
   return (
