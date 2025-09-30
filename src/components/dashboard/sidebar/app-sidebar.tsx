@@ -2,12 +2,11 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
-  BookOpen,
+  
   Bot,
-  Command,
+  
   Frame,
-  GalleryVerticalEnd,
+ 
   Map,
   PieChart,
   Settings2,
@@ -17,17 +16,16 @@ import {
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
+
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar"
-import { TeamSwitcher } from "./team-switcher"
+
 import { NavMain } from "./nav-main"
 import { NavProjects } from "./nav-projects"
-import { NavUser } from "./nav-user"
 import Link from "next/link"
 import Logo from "@/assets/svgs/logo"
 

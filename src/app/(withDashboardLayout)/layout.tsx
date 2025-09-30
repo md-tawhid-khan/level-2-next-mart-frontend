@@ -30,7 +30,7 @@ export default function DashboardLayout({children}:{children: React.ReactNode}) 
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           
-          <div className=" min-h-[100vh] flex-1 bg-amber-500 rounded-xl md:min-h-min" >{children}</div>
+          <div className=" min-h-[100vh] flex-1 bg-amber-50 rounded-xl md:min-h-min" >{children}</div>
         </div>
       </SidebarInset>
     </SidebarProvider>
