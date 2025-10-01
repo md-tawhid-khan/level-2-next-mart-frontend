@@ -22,7 +22,7 @@ const CreateShopForm = () => {
     const {formState:{isSubmitting}}=form
 
     const onSubmit:SubmitHandler<FieldValues>=async(data:TShop)=>{
-       console.log(data)
+      
       const servicesOffered=data?.servicesOffered!.split(",").map((service:string)=>service.trim()).filter((service:string)=>service !== "")
 
       const modifyData={
@@ -35,10 +35,12 @@ const CreateShopForm = () => {
           formData.append('logo', imageFiles[0] as File )
 
           const res= await createShop(formData)
-          console.log(res)
+          
            
           if(res.success){
             toast.success(res.message)
+          }else{
+            toast.error(res.message)
           }
 
 

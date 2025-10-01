@@ -1,66 +1,64 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import {
-  FieldValues,
-  SubmitHandler,
-  useFieldArray,
-  useForm,
-} from "react-hook-form";
-import { Textarea } from "@/components/ui/textarea";
-import { useEffect, useState } from "react";
-import NMImageUploader from "@/components/ui/core/NMImageUploader";
-
-import { Plus } from "lucide-react";
-
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+"use client"
 import Logo from "@/assets/svgs/logo";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import NMImageUploader from "@/components/ui/core/NMImageUploader";
 import ImagePreviewer from "@/components/ui/core/NMImageUploader/imagePreviewer";
-import { ICategory, TBrandData } from "@/types";
-import { getAllCategories } from "@/services/category";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { getAllBrand } from "@/services/brand";
-import { addProduct } from "@/services/product";
+import { getAllCategories } from "@/services/category";
+import { updateProduct } from "@/services/product";
 
-export default function AddProductsForm() {
-  const [imageFiles, setImageFiles] = useState<File[] | []>([]);
-  const [imagePreview, setImagePreview] = useState<string[] | []>([]);
+import { ICategory, TBrandData } from "@/types";
+import { Select } from "@radix-ui/react-select";
+import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
+import {  useEffect, useState } from "react";
+import { FieldValues, SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+const UpdateProductForm = ({product}) => {
+
+   const router=useRouter()
+
+     const [imageFiles, setImageFiles] = useState<File[] | []>([]);
+  const [imagePreview, setImagePreview] = useState<string[] | []>(
+    product?.imageUrls || []
+  );
   const [categories, setCategories] = useState<ICategory[] | []>([]);
   const [brands, setBrands] = useState<TBrandData[] | []>([]);
 
-  const router = useRouter();
+     
 
-  const form = useForm({
-    defaultValues: {
-      name: "",
-      description: "",
-      price: "",
-      category: "",
-      brand: "",
-      stock: "",
-      weight: "",
-      availableColors: [{ value: "" }],
-      keyFeatures: [{ value: "" }],
-      specification: [{ key: "", value: "" }],
+    const form=useForm({
+        defaultValues: {
+      name:product?.name || "" ,
+      description:product?.description || "",
+      price:product?.price || "",
+       category: product?.category?.name || "",
+      brand: product?.brand?.name || "",
+      stock:product?.stock || "",
+      weight:product?.weight || "",
+      availableColors: product?.availableColors?.map((color) => ({
+        value: color,
+      })) || [{ value: "" }],
+      keyFeatures:product?.keyFeatures.map((feature)=>({value:feature})) || [{ value: "" }],
+      
+      specification:  Object.entries(product?.specification || {}).map(
+        ([key, value]) => ({ key, value })
+      ) || [{ key: "", value: "" }],
       images:[{value:''}]
     },
-  });
+    })
 
-  const {
+
+     const {
     formState: { isSubmitting },
   } = form;
 
-  const { append: appendColor, fields: colorFields } = useFieldArray({
+ const { append: appendColor, fields: colorFields } = useFieldArray({
     control: form.control,
     name: "availableColors",
   });
@@ -89,7 +87,7 @@ export default function AddProductsForm() {
 
   // console.log(specFields);
 
-  useEffect(() => {
+   useEffect(() => {
     const fetchData = async () => {
       const [categoriesData, brandsData] = await Promise.all([
         getAllCategories(),
@@ -103,22 +101,19 @@ export default function AddProductsForm() {
     fetchData();
   }, []);
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const availableColors = data.availableColors.map(
+  const onSubmit:SubmitHandler<FieldValues>=async(data)=>{
+ const availableColors = data.availableColors.map(
       (color: { value: string }) => color.value
     );
 
     const keyFeatures = data.keyFeatures.map(
       (feature: { value: string }) => feature.value
     );
-
-    const specification: { [key: string]: string } = {};
+     const specification: { [key: string]: string } = {};
     data.specification.forEach(
       (item: { key: string; value: string }) =>
         (specification[item.key] = item.value)
     );
-
-    // console.log({ availableColors, keyFeatures, specification });
 
     const modifiedData = {
       ...data,
@@ -136,31 +131,28 @@ export default function AddProductsForm() {
     for (const file of imageFiles) {
       formData.append("images", file);
     }
-     
+
     try {
-      
-      const res = await addProduct(formData);
+          const res = await updateProduct(formData, product?._id);
 
       if (res.success) {
         toast.success(res.message);
-        router.push("/user/shop/products");
+        router.push("/user/shop/all-products");
       } else {
         toast.error(res.message);
       }
-    } catch (err: any) {
-      console.error(err);
+    } catch (error) {
+         console.log(error)
     }
-  };
+  }
 
-
-  
-
-  return (
-    <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-2xl p-5 ">
+    return (
+        <div>
+           <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-2xl p-5 ">
       <div className="flex items-center space-x-4 mb-5 ">
         <Logo />
 
-        <h1 className="text-xl font-bold">Add Product</h1>
+        <h1 className="text-xl font-bold">Update Product</h1>
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -196,7 +188,7 @@ export default function AddProductsForm() {
               )}
             />
 
-            <FormField
+               <FormField
               control={form.control}
               name="category"
               render={({ field }) => (
@@ -208,7 +200,7 @@ export default function AddProductsForm() {
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Select Product Category" />
+                        <SelectValue placeholder="Select Product Brand" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
@@ -443,5 +435,8 @@ export default function AddProductsForm() {
         </form>
       </Form>
     </div>
-  );
-}
+        </div>
+    );
+};
+
+export default UpdateProductForm;

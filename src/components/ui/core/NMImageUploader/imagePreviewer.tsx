@@ -27,7 +27,7 @@ const ImagePreviewer=({
    return (
     <div className={cn({className})}>
         {
-            imagePreview.map((preview,index)=>(<div key={index} className="relative w-36 h-36 rounded-md overflow-hidden border border-dashed border-gray-300">
+            imagePreview.map((preview,index)=>(<div key={index} className="relative  w-36 h-36 rounded-md overflow-hidden border border-dashed border-gray-300">
                <Image width={500} height={500} src={preview} alt={`Preview ${index+1}`}/> 
                 <Button
                 onClick={()=>handleRemove(index)}

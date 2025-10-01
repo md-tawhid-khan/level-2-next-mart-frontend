@@ -1,10 +1,14 @@
+"use server"
 import ManageProducts from "@/components/modules/shop/allProducts";
+import { getAllProducts } from "@/services/product";
 
 
-const AllProductsPage = () => {
+const AllProductsPage = async() => {
+    const {data:products,meta}= await getAllProducts()
+   
     return (
         <div>
-             <ManageProducts/>
+             <ManageProducts products={products}/>
         </div>
     );
 };

@@ -1,7 +1,7 @@
 "use client"
 import { Dispatch, SetStateAction, useState } from "react";
 import { Input } from "../../input";
-import Image from "next/image";
+
 import { cn } from "@/lib/utils";
 
 type TImageUploaderProps={
@@ -14,26 +14,24 @@ type TImageUploaderProps={
 const NMImageUploader = ({label="Upload Image",setImageFile,setImagePreview,className}:TImageUploaderProps) => {
 
     
-    
+const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const files = event.target.files;
+  if (!files) return;
 
-    const handleImageChange=(event : React.ChangeEvent<HTMLInputElement> )=>{
-        const file=event.target.files![0] ;
-        setImageFile((prev)=>[...prev,file])
+  const fileArray = Array.from(files);
 
-        if(file){
-            const reader=new FileReader()
-            reader.onloadend=()=>{
-                setImagePreview((prev)=>[...prev,reader.result as string])
-            }
+  setImageFile((prev) => [...prev, ...fileArray]);
 
-            reader.readAsDataURL(file)
+  fileArray.forEach((file) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview((prev) => [...prev, reader.result as string]);
+    };
+    reader.readAsDataURL(file);
+  });
 
-        }
-
-        event.target.value =''
-    }
-
-   
+  event.target.value = "";
+};
 
     return (
         <div className={cn("flex flex-col items-center w-full gap-4", className)}>
