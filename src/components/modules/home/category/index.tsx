@@ -12,7 +12,7 @@ const Category = async() => {
          <NHContainer className='my-20'>
       <div className="flex items-center justify-between ">
         <h2 className="font-bold text-2xl">Category</h2>
-        <Link href="/all-products">
+        <Link href="/products">
           <Button variant="outline" className="rounded-full cursor-pointer">
             View All
           </Button>

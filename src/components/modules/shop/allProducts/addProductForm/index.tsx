@@ -143,7 +143,7 @@ export default function AddProductsForm() {
 
       if (res.success) {
         toast.success(res.message);
-        router.push("/user/shop/products");
+        router.push("/user/shop/all-products");
       } else {
         toast.error(res.message);
       }

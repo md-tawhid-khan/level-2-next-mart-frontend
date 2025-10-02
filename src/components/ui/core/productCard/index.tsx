@@ -9,21 +9,23 @@ import {
 import {Button }from "@/components/ui/button";
 import Link from "next/link";
 import { Heart, ShoppingCart, Star } from "lucide-react";
+import { TPorduct } from "@/types";
 
 
-const ProductCard = ({product}) => {
+
+const ProductCard = ({product}:{product:TPorduct}) => {
     return (
-          <Card className="p-3">
-      <CardHeader className="relative p-0 h-48">
+          <Card className="p-3 h-36">
+      <CardHeader className="relative p-0 h-48 ">
         <Image
           src={
             product?.imageUrls[0] ||
             "https://psediting.websites.co.in/obaju-turquoise/img/product-placeholder.png"
           }
-          width={500}
-          height={500}
+          width={200}
+          height={200}
           alt="product image"
-          className="rounded-sm h-48 object-cover"
+          className="rounded-sm h-32 object-cover"
         />
           {product?.stock === 0 && (
           <div className="absolute left-2 top-0 bg-red-500 text-white px-2 rounded-full">

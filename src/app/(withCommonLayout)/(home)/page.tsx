@@ -1,4 +1,4 @@
-
+import Brand from "@/components/modules/home/brand";
 import Category from "@/components/modules/home/category";
 import FeaturesProducts from "@/components/modules/home/featuresProducts";
 import FlashSales from "@/components/modules/home/flashSales";
@@ -13,6 +13,7 @@ const HomePage =() => {
        <Category/>
        <FeaturesProducts/>
        <FlashSales/>
+       <Brand/>
     </div>
   );
 };
