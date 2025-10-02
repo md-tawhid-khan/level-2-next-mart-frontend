@@ -1,23 +1,61 @@
 "use client"
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { NMTable } from "@/components/ui/core/NHTable";
+import { TPorduct } from "@/types";
 import { Edit, Eye, Plus, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 
-const ManageProducts= ({products}) => {
+const ManageProducts= ({products}:{products:TPorduct[]}) => {
+  const [selectProductId , setSelectProductId]=useState<string[] | []>([])
    const router=useRouter()
-    const handleView=()=>{
-        console.log('this is handle view')
+
+    const handleView=(data)=>{
+        console.log('this is handle view',data)
     }
 
+    console.log(selectProductId)
+
     const columns = [
+       {
+    id: "select",
+    header: ({ table }:any) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }:any) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => {
+          if(value){
+            setSelectProductId((prev) => [...prev, row.original._id]);
+          }else{
+           setSelectProductId(selectProductId.filter(id=>id !== row?.original?._id))
+          }
+          row.toggleSelected(!!value)}
+        }
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
+
+
     {
       accessorKey: "name",
       header: "Product Name",
-      cell: ({ row }) => (
+      cell: ({ row }:any) => (
         <div className="flex items-center space-x-3">
           <Image
             src={row.original.imageUrls[0]}
@@ -33,27 +71,27 @@ const ManageProducts= ({products}) => {
     {
       accessorKey: "category",
       header: "Category",
-      cell: ({ row }) => <span>{row.original.category.name}</span>,
+      cell: ({ row }:any) => <span>{row.original.category.name}</span>,
     },
     {
       accessorKey: "brand",
       header: "Brand",
-      cell: ({ row }) => <span>{row.original.brand.name}</span>,
+      cell: ({ row }:any) => <span>{row.original.brand.name}</span>,
     },
     {
       accessorKey: "stock",
       header: "Stock",
-      cell: ({ row }) => <span>{row.original.stock}</span>,
+      cell: ({ row }:any) => <span>{row.original.stock}</span>,
     },
     {
       accessorKey: "price",
       header: "Price",
-      cell: ({ row }) => <span>$ {row.original.price.toFixed(2)}</span>,
+      cell: ({ row }:any) => <span>$ {row.original.price.toFixed(2)}</span>,
     },
     {
       accessorKey: "offerPrice",
       header: "Ofter Price",
-      cell: ({ row }) => (
+      cell: ({ row }:any) => (
         <span>
           $ {row.original.offerPrice ? row.original.offerPrice.toFixed(2) : "0"}
         </span>
@@ -62,12 +100,12 @@ const ManageProducts= ({products}) => {
     {
       accessorKey: "action",
       header: "Action",
-      cell: ({ row }) => (
+      cell: ({ row }:any) => (
         <div className="flex items-center space-x-3">
           <button
             className="text-gray-500 hover:text-blue-500"
             title="View"
-            onClick={() => handleView(row.original)}
+            onClick={() => handleView(row?.original)}
           >
             <Eye className="w-5 h-5" />
           </button>

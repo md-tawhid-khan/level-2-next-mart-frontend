@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import CategoryCard from '@/components/ui/core/CategoryCard';
+import NHContainer from '@/components/ui/core/NHContainer';
 import { getAllCategories } from '@/services/category';
 import { ICategory } from '@/types';
 import Link from 'next/link';
@@ -8,8 +9,8 @@ import React from 'react';
 const Category = async() => {
      const { data: categories } = await getAllCategories();
     return (
-         <div className="container mx-auto my-20">
-      <div className="flex items-center justify-between mx-9">
+         <NHContainer className='my-20'>
+      <div className="flex items-center justify-between ">
         <h2 className="font-bold text-2xl">Category</h2>
         <Link href="/all-products">
           <Button variant="outline" className="rounded-full cursor-pointer">
@@ -24,7 +25,7 @@ const Category = async() => {
             <CategoryCard key={idx} category={category} />
           ))}
       </div>
-    </div>
+    </NHContainer>
     );
 };
 
