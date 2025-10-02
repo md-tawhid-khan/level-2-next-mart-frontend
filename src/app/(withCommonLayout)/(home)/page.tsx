@@ -1,6 +1,7 @@
 
 import Category from "@/components/modules/home/category";
 import FeaturesProducts from "@/components/modules/home/featuresProducts";
+import FlashSales from "@/components/modules/home/flashSales";
 import HeroSection from "@/components/modules/home/heroSection";
 
 
@@ -11,6 +12,7 @@ const HomePage =() => {
        <HeroSection/>
        <Category/>
        <FeaturesProducts/>
+       <FlashSales/>
     </div>
   );
 };

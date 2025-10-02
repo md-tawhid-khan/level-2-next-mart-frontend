@@ -18,9 +18,8 @@ const FeaturesProducts = async() => {
           </Link>
         </div>
           <div className="grid grid-cols-5 gap-8 my-5">
-          {Array(5)
-            .fill(products?.[0])
-            .map((product, idx: number) => (
+          {
+            products?.slice(0,5)?.map((product, idx: number) => (
               <ProductCard key={idx} product={product} />
             ))}
         </div>

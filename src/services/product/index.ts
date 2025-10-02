@@ -31,9 +31,7 @@ export const addProduct = async (productData: FormData): Promise<any> => {
       headers: {
         Authorization: (await cookies()).get("accessToken")!.value,
       },
-       next: {
-          tags: ["PRODUCT"],
-        },
+      
     });
     revalidateTag("PRODUCT");
     return await res.json();
@@ -69,7 +67,9 @@ export const getSingleProduct=async(productId:string)=>{
             headers:{
                  Authorization:(await cookies()).get('accessToken')!.value
             },    
-             
+              next: {
+          tags: ["PRODUCT"],
+        },
         })
         
         return await res.json()
