@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import DiscountModal from "./discountModal";
 
 
 const ManageProducts= ({products}:{products:TPorduct[]}) => {
@@ -18,7 +19,9 @@ const ManageProducts= ({products}:{products:TPorduct[]}) => {
         console.log('this is handle view',data)
     }
 
-    console.log(selectProductId)
+    const handleDelete=(data)=>{
+      console.log('handle product delete ',data)
+    }
 
     const columns = [
        {
@@ -125,7 +128,7 @@ const ManageProducts= ({products}:{products:TPorduct[]}) => {
           <button
             className="text-gray-500 hover:text-red-500"
             title="Delete"
-            // onClick={() => handleDelete(row.original._id)}
+            onClick={() => handleDelete(row.original._id)}
           >
             <Trash className="w-5 h-5" />
           </button>
@@ -137,12 +140,15 @@ const ManageProducts= ({products}:{products:TPorduct[]}) => {
         <div>
         <div className="flex justify-between items-center p-5">
             <h1>Manage Products </h1>
-            <Link href="/user/shop/all-products/add-product">
-            <Button className="cursor-pointer">create products</Button>
-            <Plus/>
+            <div className="flex gap-3">
+              <Link href="/user/shop/all-products/add-product">
+            <Button className="cursor-pointer">create products <Plus/></Button>          
             </Link>
+          <DiscountModal selectProductId={selectProductId} setSelectProductId={setSelectProductId}/>
+            </div>
             
         </div>
+         
          <NMTable columns={columns} data={products || []} />
          </div>
     );
