@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import DiscountModal from "./discountModal";
+import PaginationProduct from "./pagination";
 
 
 const ManageProducts= ({products}:{products:TPorduct[]}) => {
@@ -150,6 +151,7 @@ const ManageProducts= ({products}:{products:TPorduct[]}) => {
         </div>
          
          <NMTable columns={columns} data={products || []} />
+         <PaginationProduct/>
          </div>
     );
 };
