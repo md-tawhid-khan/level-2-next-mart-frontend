@@ -63,10 +63,7 @@ export const updateProduct=async(productData:FormData,
 export const getSingleProduct=async(productId:string)=>{
     try {
         const res=await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/product/${productId}`,{
-            method:"GET",
-            headers:{
-                 Authorization:(await cookies()).get('accessToken')!.value
-            },    
+            method:"GET",   
               next: {
           tags: ["PRODUCT"],
         },

@@ -1,3 +1,4 @@
+"use server"
 import { Button } from "@/components/ui/button";
 import NHContainer from "@/components/ui/core/NHContainer";
 import { getAllBrand } from "@/services/brand";
@@ -7,10 +8,12 @@ import { TBrandData } from "@/types";
 import Link from "next/link";
 
 const Brand = async() => {
-    const { data: brands } = await getAllBrand();
-    console.log({brands})
+    const  {data : brands } = await getAllBrand();
+   
+     
     return (
          <NHContainer className='my-20'>
+         
       <div className="flex items-center justify-between ">
         <h2 className="font-bold text-2xl">Top Brand</h2>
         <Link href="/products">

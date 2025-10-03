@@ -27,9 +27,6 @@ export const CreateBrand=async(data:FormData)=>{
        try {
           const res=await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/brand`,{
             method:"GET",
-            headers:{
-                Authorization:(await cookies()).get('accessToken')!.value
-            },
            next:{
             tags:["brand"]
            }
