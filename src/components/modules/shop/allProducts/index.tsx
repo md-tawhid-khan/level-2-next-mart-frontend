@@ -2,17 +2,17 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { NMTable } from "@/components/ui/core/NHTable";
-import { TPorduct } from "@/types";
+import { TMeta, TPorduct } from "@/types";
 import { Edit, Eye, Plus, Trash } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import DiscountModal from "./discountModal";
-import PaginationProduct from "./pagination";
+import TablePagination from "./pagination";
 
 
-const ManageProducts= ({products}:{products:TPorduct[]}) => {
+const ManageProducts= ({products,meta}:{products:TPorduct[],meta:TMeta}) => {
   const [selectProductId , setSelectProductId]=useState<string[] | []>([])
    const router=useRouter()
 
@@ -151,7 +151,7 @@ const ManageProducts= ({products}:{products:TPorduct[]}) => {
         </div>
          
          <NMTable columns={columns} data={products || []} />
-         <PaginationProduct/>
+         <TablePagination totalPages={meta.totalPage}/>
          </div>
     );
 };

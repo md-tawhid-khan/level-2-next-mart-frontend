@@ -3,10 +3,10 @@ import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers"
 
 // get all products
-export const getAllProducts = async () => {
+export const getAllProducts = async (page?:string,limit?:string) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/product`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/product?page=${page}&limit=${limit}`,
       {
         method:"GET",
         next: {
