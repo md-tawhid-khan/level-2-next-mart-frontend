@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import {
   Card,
@@ -10,10 +11,16 @@ import {Button }from "@/components/ui/button";
 import Link from "next/link";
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import { TPorduct } from "@/types";
+import { useAppDispatch } from "@/redux/hooks";
+import { addProduct } from "@/redux/features/cartSlice";
 
 
 
 const ProductCard = ({product}:{product:TPorduct}) => {
+  const dispatch=useAppDispatch()
+  const handleAddProduct=(product:TPorduct)=>{
+    dispatch(addProduct(product))
+  }
     return (
           <Card className="p-3 h-36">
       <CardHeader className="relative p-0 h-48 ">
@@ -77,6 +84,7 @@ const ProductCard = ({product}:{product:TPorduct}) => {
           > Buy Now
           </Button>
           <Button
+            onClick={()=>handleAddProduct(product)}
             disabled={product?.stock === 0}
             variant="outline"
             size="sm"

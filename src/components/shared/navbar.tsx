@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { getCurrentUser, logout } from "@/services/authServices";
+import {  logout } from "@/services/authServices";
 import { useUser } from "@/context/userContext";
 import { usePathname, useRouter } from "next/navigation";
 import { privateRoutes } from "@/constant";
@@ -58,9 +58,11 @@ const handleLogOut=async()=>{
           <Button variant="outline" className="rounded-full p-0 size-10">
             <Heart />
           </Button>
-          <Button variant="outline" className="rounded-full p-0 size-10">
+          <Link href='/cart'>
+          <Button  variant="outline" className="rounded-full p-0 size-10">
             <ShoppingBag />
           </Button>
+          </Link>
           {
             user? <>
         <Link href="/create-shop">
