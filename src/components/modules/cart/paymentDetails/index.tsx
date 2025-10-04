@@ -1,16 +1,16 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import { orderSelector, shippingCostSelector, subTotalSelector } from "@/redux/features/cartSlice";
+import { grandTotalSeclector, orderSelector, shippingCostSelector, subTotalSelector } from "@/redux/features/cartSlice";
 
 import { useAppSelector } from "@/redux/hooks";
 
 
 const PaymentDetails = () => {
 
-  const subTotal=useAppSelector(subTotalSelector)
-  const order=useAppSelector(orderSelector)
-
+  const subTotal=useAppSelector(subTotalSelector) 
   const shippingCost=useAppSelector(shippingCostSelector)
+  const grandTotalCost=useAppSelector(grandTotalSeclector)
+  const order=useAppSelector(orderSelector)
         
     const handleOrder=()=>{
         console.log('handleOrder',order)
@@ -34,7 +34,7 @@ const PaymentDetails = () => {
       </div>
       <div className="flex justify-between mt-10 mb-5">
         <p className="text-gray-500 ">Grand Total</p>
-        <p className="font-semibold">00</p>
+        <p className="font-semibold">{grandTotalCost}</p>
       </div>
       <Button
         onClick={handleOrder}

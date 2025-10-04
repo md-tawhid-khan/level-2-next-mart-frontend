@@ -74,23 +74,7 @@ export const orderedProductSelector=(state:RootState)=>{
      return state.cart.products ;
 }
 
-export const shippingCostSelector=(state:RootState)=>{
-   if (
-    state.cart.city &&
-    state.cart.city === "Dhaka" &&
-    state.cart.products.length > 0
-  ) {
-    return 60;
-  } else if (
-    state.cart.city &&
-    state.cart.city !== "Dhaka" &&
-    state.cart.products.length > 0
-  ) {
-    return 120;
-  } else {
-    return 0;
-  }
-}
+
 
 export const orderSelector=(state:RootState)=>{
     return {
@@ -113,6 +97,32 @@ export const subTotalSelector=(state:RootState)=>{
       return acc + product.price * product.orderQuantity;
     }
   }, 0);
+}
+
+export const shippingCostSelector=(state:RootState)=>{
+   if (
+    state.cart.city &&
+    state.cart.city === "Dhaka" &&
+    state.cart.products.length > 0
+  ) {
+    return 60;
+  } else if (
+    state.cart.city &&
+    state.cart.city !== "Dhaka" &&
+    state.cart.products.length > 0
+  ) {
+    return 120;
+  } else {
+    return 0;
+  }
+}
+
+export const grandTotalSeclector=(state:RootState)=>{
+    const subTotal=subTotalSelector(state)
+
+    const shippingCost=shippingCostSelector(state)
+
+    return (subTotal+shippingCost)
 }
 
 export const {addProduct,incrementOrderQuantity,decrementOrderQuantity,removeProduct,updateCity,updateShippingAddress}=cartSlice.actions
