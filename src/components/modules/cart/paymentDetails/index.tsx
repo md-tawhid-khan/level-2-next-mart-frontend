@@ -1,8 +1,10 @@
 "use client"
 import { Button } from "@/components/ui/button";
+import { useUser } from "@/context/userContext";
 import { currencyFormater } from "@/lib/currencyFormater";
 import { citySelector, grandTotalSeclector, orderedProductSelector, orderSelector, shippingAddressSelector, shippingCostSelector, subTotalSelector, } from "@/redux/features/cartSlice";
 import { useAppSelector } from "@/redux/hooks";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 
@@ -16,26 +18,33 @@ const PaymentDetails = () => {
   const city=useAppSelector(citySelector)
   const shippingAddress=useAppSelector(shippingAddressSelector)
   const products=useAppSelector(orderedProductSelector)
+  const {user}=useUser()
+  const router=useRouter()
+  
+  console.log(products)
         
     const handleOrder=()=>{
       const orderLoading=toast.loading('order is being placed')
       try {
+        if(!user){
+           router.push("/login")
+           throw new Error("user in missing")
+        }
           if(!city){
         throw new Error("city is missing")
       }
       if(!shippingAddress){
         throw new Error("shipping address is missing")
       }
-       if(!products){
+       if(products.length === 0){
         throw new Error("whart are you order, order card is empty")
        }
-       toast.success('Order create successfully',{id:orderLoading})
+       toast.success('Order created successfully',{id:orderLoading})
       console.log('handleOrder',order)
       } catch (error:any) {
          toast.error(error.message,{id:orderLoading})
       }
-    
-        
+       
     }
     return (
         <div className="border-2 border-white bg-background brightness-105 rounded-md col-span-4 h-fit p-5">
