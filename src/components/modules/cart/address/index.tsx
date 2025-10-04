@@ -21,7 +21,7 @@ const Address = () => {
         dispatch(updateShippingAddress(address))
     }
   
-    console.log(selectCity,shippingAddress)
+    // console.log(selectCity,shippingAddress)
 
     return (
          <div className="border-2 border-white bg-background brightness-105 rounded-md col-span-4  p-5 ">

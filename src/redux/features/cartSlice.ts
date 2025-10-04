@@ -74,13 +74,42 @@ export const orderedProductSelector=(state:RootState)=>{
      return state.cart.products ;
 }
 
+export const shippingCostSelector=(state:RootState)=>{
+   if (
+    state.cart.city &&
+    state.cart.city === "Dhaka" &&
+    state.cart.products.length > 0
+  ) {
+    return 60;
+  } else if (
+    state.cart.city &&
+    state.cart.city !== "Dhaka" &&
+    state.cart.products.length > 0
+  ) {
+    return 120;
+  } else {
+    return 0;
+  }
+}
+
+export const orderSelector=(state:RootState)=>{
+    return {
+        products:state.cart.products.map(product=>({
+            product:product._id,
+            quantity:product.orderQuantity,
+        })),
+        shippingAddress:`${state.cart.shippingAddress} - ${state.cart.city}`,
+        paymentMethod:'online'
+    }
+}
+
 export const subTotalSelector=(state:RootState)=>{
      return state.cart.products.reduce((acc, product) => {
     if (product.offerPrice) {
-      console.log(product.offerPrice);
+    //   console.log(product.offerPrice);
       return acc + product.offerPrice * product.orderQuantity;
     } else {
-      console.log(product.price, "Price");
+    //   console.log(product.price, "Price");
       return acc + product.price * product.orderQuantity;
     }
   }, 0);
