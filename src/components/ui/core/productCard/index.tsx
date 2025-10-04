@@ -13,6 +13,7 @@ import { Heart, ShoppingCart, Star } from "lucide-react";
 import { TPorduct } from "@/types";
 import { useAppDispatch } from "@/redux/hooks";
 import { addProduct } from "@/redux/features/cartSlice";
+import { currencyFormater } from "@/lib/currencyFormater";
 
 
 
@@ -57,12 +58,12 @@ const ProductCard = ({product}:{product:TPorduct}) => {
             {product?.offerPrice ? (
               <>
                 <span className="font-semibold mr-2 text-orange-400">
-                  $ {product?.offerPrice}
+                   {currencyFormater(product?.offerPrice)}
                 </span>
-                <del className="font-semibold text-xs">$ {product?.price}</del>
+                <del className="font-semibold text-xs">{currencyFormater(product?.price)}</del>
               </>
                ) : (
-              <span className="font-semibold">$ {product?.price}</span>
+              <span className="font-semibold">{currencyFormater(product?.price)}</span>
             )}
           </p>
          </div>

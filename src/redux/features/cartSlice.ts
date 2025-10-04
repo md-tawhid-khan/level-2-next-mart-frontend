@@ -74,8 +74,6 @@ export const orderedProductSelector=(state:RootState)=>{
      return state.cart.products ;
 }
 
-
-
 export const orderSelector=(state:RootState)=>{
     return {
         products:state.cart.products.map(product=>({

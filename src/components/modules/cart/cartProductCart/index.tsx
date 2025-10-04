@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { currencyFormater } from "@/lib/currencyFormater";
 import { decrementOrderQuantity, ICartProduct, incrementOrderQuantity, removeProduct } from "@/redux/features/cartSlice";
 import { useAppDispatch } from "@/redux/hooks";
 
@@ -49,7 +50,7 @@ const CartProductCard = ({product}:{product:ICartProduct}) => {
         <div className="flex items-center justify-between">
           <h2>
             Price:
-            {product.offerPrice ? product.offerPrice : product.price}
+            {product.offerPrice ? currencyFormater(product.offerPrice) : currencyFormater(product.price)}
           </h2>
           <div className="flex items-center gap-2">
             <p className="text-gray-500 font-semibold">Quantity</p>
