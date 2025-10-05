@@ -1,3 +1,4 @@
+import Loading from "@/components/ui/loading"
 import { AppStore, makeStore } from "@/redux/store"
 import { useRef } from "react"
 import { Provider } from "react-redux"
@@ -19,7 +20,7 @@ const StoreProvider = ({
   const persistedStore=persistStore(storeRef.current)
 
   return <Provider store={storeRef.current}>
-     <PersistGate loading={<p>loading .......</p>} persistor={persistedStore}>
+     <PersistGate loading={<Loading/>} persistor={persistedStore}>
     {children}
     </PersistGate>
     </Provider>
