@@ -10,11 +10,13 @@ interface InitialState {
       products:ICartProduct[];
       city:string;
       shippingAddress:string;
+      color:string
 }
 const initialState:InitialState={
     products:[],
     city:'',
-    shippingAddress:''
+    shippingAddress:'',
+    color:''
 }
 
 const cartSlice=createSlice({
@@ -58,7 +60,13 @@ const cartSlice=createSlice({
 
         updateShippingAddress:(state,action)=>{
             state.shippingAddress=action.payload
-        }
+        },
+
+        clearCart: (state) => {
+      state.products = [];
+      state.city = "";
+      state.shippingAddress = "";
+        },
     }
 })
 
@@ -79,9 +87,10 @@ export const orderSelector=(state:RootState)=>{
         products:state.cart.products.map(product=>({
             product:product._id,
             quantity:product.orderQuantity,
+            color:'white'
         })),
         shippingAddress:`${state.cart.shippingAddress} - ${state.cart.city}`,
-        paymentMethod:'online'
+        paymentMethod:'Online'
     }
 }
 
@@ -123,6 +132,6 @@ export const grandTotalSeclector=(state:RootState)=>{
     return (subTotal+shippingCost)
 }
 
-export const {addProduct,incrementOrderQuantity,decrementOrderQuantity,removeProduct,updateCity,updateShippingAddress}=cartSlice.actions
+export const {addProduct,incrementOrderQuantity,decrementOrderQuantity,removeProduct,updateCity,updateShippingAddress,clearCart}=cartSlice.actions
 
 export default cartSlice.reducer ;
