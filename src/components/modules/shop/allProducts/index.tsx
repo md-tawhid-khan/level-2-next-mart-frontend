@@ -9,7 +9,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import DiscountModal from "./discountModal";
-import TablePagination from "./pagination";
+import TablePagination from "@/components/ui/core/NHTable/tablePagination";
+
 
 
 const ManageProducts= ({products,meta}:{products:TPorduct[],meta:TMeta}) => {
@@ -151,7 +152,7 @@ const ManageProducts= ({products,meta}:{products:TPorduct[],meta:TMeta}) => {
         </div>
          
          <NMTable columns={columns} data={products || []} />
-         <TablePagination totalPages={meta.totalPage}/>
+         <TablePagination totalPage={meta.totalPage}/>
          </div>
     );
 };
