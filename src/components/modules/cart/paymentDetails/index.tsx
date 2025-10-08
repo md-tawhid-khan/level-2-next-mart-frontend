@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/context/userContext";
 import { currencyFormater } from "@/lib/currencyFormater";
-import { citySelector, clearCart, grandTotalSeclector, orderedProductSelector, orderSelector, shippingAddressSelector, shippingCostSelector, subTotalSelector, } from "@/redux/features/cartSlice";
+import { citySelector, clearCart, couponSelector, discountAmountSelector, grandTotalSeclector, orderedProductSelector, orderSelector, shippingAddressSelector, shippingCostSelector, subTotalSelector, } from "@/redux/features/cartSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { createOrder } from "@/services/cart";
 import { useRouter } from "next/navigation";
@@ -21,6 +21,8 @@ const PaymentDetails = () => {
   const products=useAppSelector(orderedProductSelector)
   const {user}=useUser()
   const router=useRouter()
+  const discountAmount=useAppSelector(discountAmountSelector)
+  const coupon=useAppSelector(couponSelector)
   const dispatch=useAppDispatch()
   
 
@@ -42,7 +44,18 @@ const PaymentDetails = () => {
         throw new Error("whart are you order, order card is empty")
        }
 
-       const res=await createOrder(order)
+       let couponData ;
+
+       if(coupon.code){
+        couponData={
+          ...order, coupon:coupon.code
+        }
+       }
+       else{
+        couponData=order
+       }
+
+       const res=await createOrder(couponData)
        console.log(res)
       
        if(res.success){
@@ -71,7 +84,7 @@ const PaymentDetails = () => {
         </div>
         <div className="flex justify-between">
           <p className="text-gray-500 ">Discount</p>
-        <p className="font-semibold">{currencyFormater(0)}</p>
+        <p className="font-semibold">{currencyFormater(discountAmount)}</p>
         </div>
         <div className="flex justify-between">
           <p className="text-gray-500 ">Shipment Cost</p>

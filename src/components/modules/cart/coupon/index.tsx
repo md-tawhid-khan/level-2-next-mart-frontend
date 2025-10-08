@@ -2,13 +2,19 @@
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { couponSelector, fetchCoupon, shopSelector, subTotalSelector } from "@/redux/features/cartSlice";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { Trash } from "lucide-react";
-
-import { useForm } from "react-hook-form";
+import {  FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 
 const Coupon = () => {
+   const dispatch=useAppDispatch()
+  const subTotal=useAppSelector(subTotalSelector)
+  const shopId=useAppSelector(shopSelector)
+  const {discountAmount,error,code,isLoading}=useAppSelector(couponSelector)
+
     const form=useForm()
      const couponInput = form.watch("coupon");
 
@@ -16,9 +22,18 @@ const Coupon = () => {
     form.reset();
   };
 
-    const onSubmit=(data)=>{
-        try {
-      console.log(data);
+  
+
+    const onSubmit:SubmitHandler<FieldValues>=async(data:any)=>{
+           const couponData = {
+    couponCode: data.coupon as string,
+    shopId,
+    subTotal,
+  };      
+        try {       
+        const res = await dispatch(fetchCoupon(couponData)).unwrap();
+        
+        console.log("inside component",res)
     } catch (error: any) {
       console.log(error);
       toast.error(error.message);
@@ -42,7 +57,7 @@ const Coupon = () => {
                       {...field}
                       className="rounded-full"
                       placeholder="Promo / Coupon code"
-                      value={field.value}
+                      value={field.value || code}
                     />
                   </FormControl>
                 </FormItem>
@@ -50,11 +65,15 @@ const Coupon = () => {
             />
             <div className="flex gap-3 mt-3">
               <Button
-                disabled={!couponInput}
+                disabled={!couponInput || isLoading}
                 type="submit"
                 className="w-full text-xl font-semibold py-5 "
               >
-                Apply
+              {
+                isLoading?  <div className="flex items-center justify-center min-h-screen">
+                  <div className="w-8 h-8 border-8 border-white border-dotted rounded-full animate-spin"></div>
+                </div> : "Apply"
+            }
               </Button>
               {couponInput && (
                 <Button

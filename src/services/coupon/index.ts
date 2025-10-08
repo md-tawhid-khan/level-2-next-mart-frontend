@@ -1,5 +1,6 @@
 "use server"
 import { TCoupon } from "@/types"
+import { revalidateTag } from "next/cache"
 import { cookies } from "next/headers"
 
 export const createCoupon=async(couponData:TCoupon)=>{
@@ -12,6 +13,7 @@ export const createCoupon=async(couponData:TCoupon)=>{
             },
             body:JSON.stringify(couponData)
         })
+        revalidateTag("COUPON")
         return await res.json()
     } catch (error) {
         console.log(error)

@@ -1,6 +1,8 @@
 import { TPorduct } from "@/types";
-import { createSlice } from "@reduxjs/toolkit"
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { RootState } from "../store";
+import { addCoupon } from "@/services/cart";
+
 
 export interface ICartProduct extends TPorduct {
      orderQuantity: number;
@@ -10,14 +12,85 @@ interface InitialState {
       products:ICartProduct[];
       city:string;
       shippingAddress:string;
-      color:string
+      color:string;
+      shopId:string,
+      coupon:{
+        code:string,
+        discountAmount:number,
+        isLoading:boolean,
+        error:string
+      }
 }
 const initialState:InitialState={
     products:[],
     city:'',
     shippingAddress:'',
-    color:''
+    color:'',
+    shopId:'',
+    coupon:{
+      code:'',
+      discountAmount:0,
+      isLoading:false,
+      error:''
+    }
 }
+//  ---------------------------------------
+
+export interface ICouponResponse {
+  code: string
+  createdAt: string
+  discountType: string
+  discountValue: number
+  endDate: string
+  isActive: boolean
+  isDeleted: boolean
+  maxDiscountAmount: number
+  minOrderAmount: number
+  shop: string
+  startDate: string
+  updatedAt: string
+  _id: string
+}
+
+
+type CouponResponse = {
+  success: boolean;
+  data: {
+    coupon:ICouponResponse,
+    discountAmount:number;    
+    discountedPrice:number;
+
+  };
+  message: string;
+};
+
+type CouponArgs = {
+  couponCode: string;
+  subTotal: number;
+  shopId: string;
+};
+
+export const fetchCoupon = createAsyncThunk<CouponResponse,CouponArgs>(
+  "cart/fetchCoupon",
+  async ({couponCode, subTotal, shopId}:CouponArgs) => {
+  
+    try {
+      const res = await addCoupon(couponCode, subTotal, shopId);
+
+      if (!res.success) {
+        throw new Error(res.message);
+      }
+
+      return res;
+    } catch (err: any) {
+      console.log(err);
+   
+      throw new Error(err.message);
+    }
+  }
+);
+
+// --------------------------------------
 
 const cartSlice=createSlice({
     name:'cart',
@@ -25,7 +98,14 @@ const cartSlice=createSlice({
     reducers:{
         
         addProduct:(state,action)=>{
+           if(state.products.length==0){
+            state.shopId = action.payload.shop._id ;
+           }
+           if(state?.shopId !== action.payload.shop._id){
+               return ;
+           }
             const productToAdd=state.products.find((product)=>product?._id==action.payload._id)
+
             if(productToAdd){
                 productToAdd.orderQuantity += 1;
                 return ;
@@ -67,6 +147,25 @@ const cartSlice=createSlice({
       state.city = "";
       state.shippingAddress = "";
         },
+    },
+    extraReducers:(builder)=>{
+      builder.addCase(fetchCoupon.pending,(state)=>{
+        state.coupon.isLoading=true;
+        state.coupon.error="" ;
+      })
+      builder.addCase(fetchCoupon.rejected,(state,action)=>{
+        state.coupon.isLoading=false ;
+        state.coupon.error=action.error.message as string ;
+        state.coupon.code="" ;
+        state.coupon.discountAmount=0;
+      })
+      builder.addCase(fetchCoupon.fulfilled,(state,action)=>{
+        state.coupon.isLoading=false ;
+        state.coupon.error="" ;
+        state.coupon.code=action.payload.data.coupon.code ;
+        state.coupon.discountAmount=action.payload.data.discountAmount ;
+
+      })
     }
 })
 
@@ -128,8 +227,21 @@ export const grandTotalSeclector=(state:RootState)=>{
     const subTotal=subTotalSelector(state)
 
     const shippingCost=shippingCostSelector(state)
+    const discountAmount=discountAmountSelector(state)
 
-    return (subTotal+shippingCost)
+    return (subTotal-discountAmount+shippingCost)
+}
+
+export const couponSelector= (state:RootState)=>{
+  return state.cart.coupon
+}
+
+export const discountAmountSelector=(state:RootState)=>{
+  return  state.cart.coupon.discountAmount;
+}
+
+export const shopSelector=(state:RootState)=>{
+  return state.cart.shopId
 }
 
 export const {addProduct,incrementOrderQuantity,decrementOrderQuantity,removeProduct,updateCity,updateShippingAddress,clearCart}=cartSlice.actions
