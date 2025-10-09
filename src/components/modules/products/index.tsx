@@ -8,7 +8,9 @@ const AllProducts = ({products}:{products:TPorduct[]}) => {
     return (
        
         <div className='flex gap-8 '>
-            <SidebarFilter/>
+            <div className="w-full max-w-sm">
+        <SidebarFilter />
+      </div>
               <div className="grid grid-cols-3 gap-8">
           {
             products?.slice(0,5)?.map((product, idx: number) => (

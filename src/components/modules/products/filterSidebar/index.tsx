@@ -10,7 +10,8 @@ import { Star } from "lucide-react";
 import { getAllCategories } from "@/services/category";
 import { getAllBrand } from "@/services/brand";
 import { toast } from "sonner";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 const SidebarFilter = () => {
   const [price, setPrice] = useState([0]);
@@ -40,12 +41,13 @@ const SidebarFilter = () => {
    },[])
    const router=useRouter()
    const pathname=usePathname()
+   const searchParams=useSearchParams()
 
   const handleSearchQuery=(query:string,value:string | number)=>{
-     router.push(`${pathname}?${query}=${value.toString()}`,{scroll:false})
+    const params=new URLSearchParams(searchParams.toString())
+    params.set(query,value.toString())
+     router.push(`${pathname}?${params}`,{scroll:false}) ;
   } 
-
-
 
   const ratings = [5, 4, 3, 2, 1];
 
@@ -53,6 +55,22 @@ const SidebarFilter = () => {
 
   return (
     <aside className="w-64 p-4 border rounded-xl bg-white shadow-md space-y-6">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-xl font-semibold">Filter</h2>
+        {searchParams.toString().length > 0 && (
+          <Button
+            onClick={() => {
+              router.push(`${pathname}`, {
+                scroll: false,
+              });
+            }}
+            size="sm"
+            className="bg-black hover:bg-gray-700 ml-5 cursor-pointer"
+          >
+            Clear Filters
+          </Button>
+        )}
+      </div>
       {/* Filter by Price */}
       <div>
         <h3 className="font-semibold mb-2">Filter By Price</h3>

@@ -5,10 +5,12 @@ import { getAllCategories } from "@/services/category";
 import { getAllProducts } from "@/services/product";
 import { ICategory } from "@/types";
 
+type TSearchParams=Promise<{[key:string]:string|number|undefined}>
 
-const ProductsPags = async() => {
+const ProductsPags = async({searchParams}:{searchParams:TSearchParams}) => {
+  const query =await searchParams ;
     const {data:categories}=await getAllCategories()
-    const {data:products}=await getAllProducts()
+    const {data:products}=await getAllProducts(undefined,undefined,query)
     return (
         <div className="container mx-auto">
             <ProductsBanner title="All Products" path="Home-Products"/>
