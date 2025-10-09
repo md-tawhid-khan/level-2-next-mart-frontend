@@ -31,7 +31,7 @@ const Coupon = () => {
     subTotal,
   };      
         try {       
-        const res = await dispatch(fetchCoupon(couponData)).unwrap();
+        const res = await dispatch(fetchCoupon(couponData)  as unknown as any ).unwrap()
         
         console.log("inside component",res)
     } catch (error: any) {

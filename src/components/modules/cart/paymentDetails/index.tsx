@@ -45,16 +45,16 @@ const PaymentDetails = () => {
        }
 
        let couponData ;
-
+       
        if(coupon.code){
         couponData={
-          ...order, coupon:coupon.code
+          ...order, coupon:coupon._id
         }
        }
        else{
         couponData=order
        }
-
+     
        const res=await createOrder(couponData)
        console.log(res)
       

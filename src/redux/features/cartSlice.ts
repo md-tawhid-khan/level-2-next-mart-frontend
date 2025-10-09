@@ -18,7 +18,8 @@ interface InitialState {
         code:string,
         discountAmount:number,
         isLoading:boolean,
-        error:string
+        error:string,
+        _id:string
       }
 }
 const initialState:InitialState={
@@ -31,7 +32,8 @@ const initialState:InitialState={
       code:'',
       discountAmount:0,
       isLoading:false,
-      error:''
+      error:'',
+      _id:''
     }
 }
 //  ---------------------------------------
@@ -164,6 +166,7 @@ const cartSlice=createSlice({
         state.coupon.error="" ;
         state.coupon.code=action.payload.data.coupon.code ;
         state.coupon.discountAmount=action.payload.data.discountAmount ;
+        state.coupon._id=action.payload.data.coupon._id;
 
       })
     }
