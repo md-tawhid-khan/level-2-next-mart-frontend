@@ -3,10 +3,12 @@ import Category from "@/components/modules/home/category";
 import FeaturesProducts from "@/components/modules/home/featuresProducts";
 import FlashSales from "@/components/modules/home/flashSales";
 import HeroSection from "@/components/modules/home/heroSection";
+import { getNewAccessToken } from "@/services/authServices";
 
 
-const HomePage =() => {
- 
+const HomePage =async() => {
+      const result=await getNewAccessToken()
+      console.log({result})
   return (
     <div className=" mt-10">
        <HeroSection/>

@@ -16,7 +16,8 @@ export const registerUser=async(userData:FieldValues)=>{
         })
          const result=await res.json()
           if(result?.success){
-            (await cookies()).set("accessToken",result?.data?.accessToken)
+            (await cookies()).set("accessToken",result?.data?.accessToken);
+            (await cookies()).set("refreshToken",result?.data?.refreshToken)
         }
         return result
    } catch (error:any) {
@@ -38,7 +39,8 @@ export const loginUser=async(userData:FieldValues)=>{
 
         const result=await res.json()
         if(result?.success){
-            (await cookies()).set("accessToken",result?.data?.accessToken)
+            (await cookies()).set("accessToken",result?.data?.accessToken) ;
+            (await cookies()).set("refreshToken",result?.data?.refreshToken)
         }
         return result
    } catch (error:any) {
@@ -87,4 +89,20 @@ export const recaptchaTokenVerification=async(token:string)=>{
 
 export const logout=async()=>{
     (await cookies()).delete('accessToken')
+}
+
+export const getNewAccessToken=async()=>{
+    try {
+    const res=await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/refresh-token`,{
+            method:"POST",
+            headers:{
+               Authorization:(await cookies()).get('refreshToken')!.value
+            },    
+        }) 
+        return await res.json()   
+    }
+        catch (error:any) {
+        console.log(error)
+        throw new Error(error.message)
+    }
 }

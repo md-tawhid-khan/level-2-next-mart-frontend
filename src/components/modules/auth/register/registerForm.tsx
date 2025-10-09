@@ -16,6 +16,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { registerUser } from "@/services/authServices";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useUser } from "@/context/userContext";
+import { useRouter, } from "next/navigation";
+
 
 const RegisterForm = () => {
   const form = useForm({
@@ -25,7 +28,9 @@ const RegisterForm = () => {
   const {
     formState: { isSubmitting },
   } = form;
-
+  const {setIsLoading}=useUser()
+  
+  const router=useRouter()
   const password = form.watch("password");
   const passwordConfirm = form.watch("passwordConfirm");
 
@@ -33,13 +38,16 @@ const RegisterForm = () => {
     try {
       const res = await registerUser(data);
       if (res?.success) {
+        setIsLoading(true);
         toast.success(res?.message);
+         router.push('/')     
       } else {
         toast.error(res?.message);
       }
       form.reset()
     } catch (error: any) {
       console.log(error);
+      throw new Error(error.message)
     }
   };
 
