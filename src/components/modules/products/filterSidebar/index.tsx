@@ -1,28 +1,51 @@
 
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Star } from "lucide-react";
+import { getAllCategories } from "@/services/category";
+import { getAllBrand } from "@/services/brand";
+import { toast } from "sonner";
+import { usePathname, useRouter } from "next/navigation";
 
 const SidebarFilter = () => {
-  const [price, setPrice] = useState([50]);
+  const [price, setPrice] = useState([0]);
 
-  const productTypes = [
-    "Laptop & Accessories",
-    "Computers-PC",
-    "Speakers & Theater",
-    "Keyboards & Mouse",
-    "Camera",
-    "Video Recording",
-    "Tablets",
-    "Table Lights",
-  ];
+  const [isLoading,setIsLoading]=useState(false) ;
+   const [categories,setCategories]=useState([]) ;
+   const [brands,setBrands]=useState([]);
 
-  const brands = ["HP (15)", "Apple (58)", "Dell (61)", "Asus (11)", "Camera"];
+
+   useEffect(()=>{
+    const fetchData=async()=>{
+    setIsLoading(true) ;
+     try {
+       const [{data:categoriesData},{data:brandsData}]=await Promise.all([getAllCategories(),getAllBrand()])
+       setCategories(categoriesData)
+       setBrands(brandsData)
+       
+     } catch (error:any) {
+      console.log(error)
+      toast.error(error.message)
+     }finally{
+      setIsLoading(false)
+     }
+    }
+
+    fetchData()
+   },[])
+   const router=useRouter()
+   const pathname=usePathname()
+
+  const handleSearchQuery=(query:string,value:string | number)=>{
+     router.push(`${pathname}?${query}=${value.toString()}`,{scroll:false})
+  } 
+
+
 
   const ratings = [5, 4, 3, 2, 1];
 
@@ -48,9 +71,13 @@ const SidebarFilter = () => {
         </div>
         <Slider
           value={price}
-          onValueChange={setPrice}
-          max={1000}
-          step={10}
+          onValueChange={(value)=>{
+            setPrice(value);
+            handleSearchQuery('price',value[0])
+          }}
+          
+          max={500000}
+          step={1000}
           className="my-2"
         />
         <p className="text-sm text-gray-500">Selected: ${price}</p>
@@ -59,26 +86,32 @@ const SidebarFilter = () => {
       {/* Product Types */}
       <div>
         <h3 className="font-semibold mb-2">Product Types</h3>
-        <RadioGroup>
-          {productTypes.map((item) => (
-            <div key={item} className="flex items-center space-x-2">
-              <RadioGroupItem value={item} id={item} />
-              <Label htmlFor={item}>{item}</Label>
+        {
+          !isLoading &&  <RadioGroup>
+          {categories.map((item:{_id:string,name:string}) => (
+            <div key={item._id} className="flex items-center space-x-2">
+              <RadioGroupItem
+              onClick={()=>handleSearchQuery("category",item._id)} 
+              value={item._id} id={item._id} />
+              <Label htmlFor={item._id}>{item.name}</Label>
             </div>
           ))}
         </RadioGroup>
+        }
+       
       </div>
 
       {/* Brands */}
       <div>
         <h3 className="font-semibold mb-2">Brands</h3>
         <RadioGroup>
-          {brands.map((brand) => (
-            <div key={brand} className="flex items-center space-x-2">
-              <RadioGroupItem value={brand} id={brand} />
-              <Label htmlFor={brand}>{brand}</Label>
-            </div>
-          ))}
+          {brands.map((brand: { _id: string; name: string }) =>
+ <div key={brand._id} className="flex items-center space-x-2">
+              <RadioGroupItem 
+              onClick={()=>handleSearchQuery("brand",brand._id)}
+              value={brand._id} id={brand._id} />
+              <Label htmlFor={brand._id}>{brand.name}</Label>
+            </div> )}
         </RadioGroup>
       </div>
 
@@ -88,7 +121,9 @@ const SidebarFilter = () => {
         <RadioGroup>
           {ratings.map((rating) => (
             <div key={rating} className="flex items-center space-x-2">
-              <RadioGroupItem value={rating.toString()} id={`rating-${rating}`} />
+              <RadioGroupItem 
+              onClick={()=>handleSearchQuery('rating',rating)}
+              value={rating.toString()} id={`rating-${rating}`} />
               <Label
                 htmlFor={`rating-${rating}`}
                 className="flex items-center gap-1"
@@ -124,3 +159,4 @@ const SidebarFilter = () => {
 };
 
 export default SidebarFilter;
+
