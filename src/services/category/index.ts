@@ -1,15 +1,17 @@
 "use server"
 
 
+import { getValidToken } from "@/lib/verifyToken";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers"
 
 const createCategory=async(data:FormData)=>{
+   const token=await getValidToken() ;
  try {
      const res=await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/category`,{
         method:'POST',
         headers:{
-             Authorization:(await cookies()).get('accessToken')!.value
+             Authorization:token
         },
         body:data
      }) ;
@@ -39,11 +41,11 @@ export const getAllCategories=async()=>{
 }
 
 export const deleteSingleCategory=async(id:string )=>{
-   
+   const token = await getValidToken() ;
    const res=await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/category/${id}`,{
       method:'DELETE',
       headers:{
-         Authorization:(await cookies()).get('accessToken')!.value
+         Authorization:token 
       }
    }) ;
     revalidateTag('categories')

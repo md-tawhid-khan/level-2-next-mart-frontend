@@ -102,7 +102,6 @@ export const getNewAccessToken=async()=>{
         return await res.json()   
     }
         catch (error:any) {
-        console.log(error)
-        throw new Error(error.message)
+        console.log(error);
     }
 }

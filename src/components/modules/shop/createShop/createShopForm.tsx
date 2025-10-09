@@ -10,12 +10,14 @@ import ImagePreviewer from "@/components/ui/core/NMImageUploader/imagePreviewer"
 import { createShop } from "@/services/shop";
 import { toast } from "sonner";
 import { TShop } from "@/types";
+import { useRouter } from "next/navigation";
 
 
 const CreateShopForm = () => {
 
   const [imageFiles,setImageFiles]=useState<File[] | [] >([])
   const [imagePreview,setImagePreview]=useState<string[] | [] >([])
+  const router=useRouter()
 
     const form =useForm()
      
@@ -39,10 +41,11 @@ const CreateShopForm = () => {
            
           if(res.success){
             toast.success(res.message)
+            router.push('/')
           }else{
             toast.error(res.message)
           }
-
+          form.reset()
 
         } catch (error) {
           console.error(error)
