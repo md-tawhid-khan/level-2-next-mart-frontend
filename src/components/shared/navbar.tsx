@@ -47,6 +47,7 @@ const handleLogOut=async()=>{
          <Logo/>
           Next Mart
         </h1>
+        {/*-------------- search bar ---------- */}
         <div className="max-w-md  flex-grow">
           <input
             type="text"
@@ -54,6 +55,7 @@ const handleLogOut=async()=>{
             className="w-full max-w-6xl border border-gray-300 rounded-full py-2 px-5"
           />
         </div>
+        {/* ---------- cart and longing section ------------*/}
         <nav className="flex gap-2">
           <Button variant="outline" className="rounded-full p-0 size-10">
             <Heart />

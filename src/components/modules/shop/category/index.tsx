@@ -104,7 +104,7 @@ const ManageCategories = ({ categories }:TCategoriesProps) => {
     <div>
       <div className="flex items-center justify-between p-5">
         <h1 className="text-2xl font-bold">Manage Category</h1>
-        <CreateCategoryModal />
+        <CreateCategoryModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
       </div>
       <NMTable columns={columns} data={categories} />
       <DeleteCategoryModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} onConfirm={handleDeleteConfirm} categoryName={categoryName} isLoading={isLoading}/>

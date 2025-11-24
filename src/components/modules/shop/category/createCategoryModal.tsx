@@ -25,7 +25,8 @@ type TCategory={
 
 const CreateCategoryModal = () => {
     const [imageFiles,setImageFiles]=useState<File[] | [] >([])
-     const [imagePreview,setImagePreview]=useState<string[] | [] >([])
+     const [imagePreview,setImagePreview]=useState<string[] | [] >([]);
+     const [isOpen, IsOpenChange]= useState(false)
 
     const form=useForm()
 
@@ -38,8 +39,11 @@ const CreateCategoryModal = () => {
         try {
            const res=await createCategory(formData)
            if(res.success){
-            toast.success(res.message)
-            form.reset()
+           IsOpenChange(false) ;
+            form.reset() ;
+            setImageFiles([]);
+            setImagePreview([]);
+            toast.success(res.message) ;           
            } else{
             toast.error(res.message)
            }
@@ -49,7 +53,7 @@ const CreateCategoryModal = () => {
     }
 
     return (
-        <Dialog>
+        <Dialog open={isOpen} onOpenChange={IsOpenChange} >
   <DialogTrigger asChild>
           <Button  className="cursor-pointer">Create Category</Button>
         </DialogTrigger>
