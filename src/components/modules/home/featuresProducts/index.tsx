@@ -5,7 +5,13 @@ import { getAllProducts } from "@/services/product";
 import Link from "next/link";
 
 const FeaturesProducts = async() => {
-     const { data: products } = await getAllProducts();
+       let products = [];
+  try {
+    const res = await getAllProducts();
+    products = res?.data || [];
+  } catch (err) {
+    console.error('FeaturesProducts fetch error:', err);
+  }
     return (
         <div className="bg-white bg-opacity-50 py-10">
       <NHContainer className="my-20" >
@@ -19,7 +25,7 @@ const FeaturesProducts = async() => {
         </div>
           <div className="grid grid-cols-5 gap-8 my-5">
           {
-            products?.slice(0,5)?.map((product, idx: number) => (
+            products?.slice(0,5)?.map((product:any, idx: number) => (
               <ProductCard key={idx} product={product} />
             ))}
         </div>

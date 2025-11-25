@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import CouponTable from "@/components/modules/shop/manage-coupon/couponTable";
 import CreateCouponModal from "@/components/modules/shop/manage-coupon/createCouponModal";
 import { getAllCoupon } from "@/services/coupon";

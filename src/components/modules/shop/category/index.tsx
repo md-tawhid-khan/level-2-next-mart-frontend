@@ -23,7 +23,7 @@ const ManageCategories = ({ categories }:TCategoriesProps) => {
   const [isModalOpen,setIsModalOpen]=useState(false)
   const [isLoading,setIsLoading]=useState(false)
 
-  const handleDelete=async(data)=>{
+  const handleDelete=async(data:any)=>{
     setCategoryId(data?._id) ;
      setCategoryName(data?.name)
     setIsModalOpen(true)
@@ -104,7 +104,7 @@ const ManageCategories = ({ categories }:TCategoriesProps) => {
     <div>
       <div className="flex items-center justify-between p-5">
         <h1 className="text-2xl font-bold">Manage Category</h1>
-        <CreateCategoryModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} />
+        <CreateCategoryModal />
       </div>
       <NMTable columns={columns} data={categories} />
       <DeleteCategoryModal isOpen={isModalOpen} onOpenChange={setIsModalOpen} onConfirm={handleDeleteConfirm} categoryName={categoryName} isLoading={isLoading}/>

@@ -16,7 +16,8 @@ export type TBrand ={
 }
 
 const CreateBrandModel = () => {
-    const form=useForm()
+    const form=useForm() ;
+    const [isOpen,onOpenChange]=useState(false) ;
     const {formState:{isSubmitting}}=form ;
         const [imageFiles,setImageFiles]=useState<File[] | [] >([])
          const [imagePreview,setImagePreview]=useState<string[] | [] >([])
@@ -30,7 +31,10 @@ const CreateBrandModel = () => {
            const res=await CreateBrand(formData)
            if(res.success){
             toast.success(res.message)
-            form.reset()
+            setImageFiles([]);
+            setImagePreview([]) ;
+            form.reset() ;
+            onOpenChange(false) ;
            } else{
             toast.error(res.message)
            }
@@ -41,7 +45,7 @@ const CreateBrandModel = () => {
     }
 
     return (
-         <Dialog>
+         <Dialog open={isOpen} onOpenChange={onOpenChange}>
   <DialogTrigger asChild>
           <Button  className="cursor-pointer">Create Brand</Button>
         </DialogTrigger>

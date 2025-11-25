@@ -5,11 +5,13 @@ import { cookies } from "next/headers"
 
 export const createCoupon=async(couponData:TCoupon)=>{
     try {
+         const cookieStore = await cookies()
+    const token = cookieStore.get("accessToken")?.value ?? "" ;
         const res=await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/coupon`,{
             method:"POST",
             headers:{
                 "Content-Type":"application/json",
-                Authorization: (await cookies()).get("accessToken")!.value,
+                Authorization: token,
             },
             body:JSON.stringify(couponData)
         })
@@ -22,10 +24,12 @@ export const createCoupon=async(couponData:TCoupon)=>{
 
 export const getAllCoupon=async()=>{
     try {
+         const cookieStore = await cookies()
+    const token = cookieStore.get("accessToken")?.value ?? "" ;
         const res=await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/coupon`,{
             method:"GET",
             headers:{
-                Authorization: (await cookies()).get("accessToken")!.value,
+                Authorization:token,
             },
             next:{
                 tags:["COUPON"]

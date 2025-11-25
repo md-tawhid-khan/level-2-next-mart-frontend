@@ -10,13 +10,13 @@ import { TBrandData } from "@/types";
 import { DeleteBrandModal } from "./deleteBrandModal";
 import { deleteSingleBrand } from "@/services/brand";
 
-const ManageBrand = ({brandData}) => {
+const ManageBrand = ({brandData}:{brandData:any}) => {
   const [brandId,setBrandId]=useState(null)
     const [brandName,setBrandName]=useState(null)
     const [isModalOpen,setIsModalOpen]=useState(false)
     const [isLoading,setIsLoading]=useState(false)
   
-    const handleDelete=async(data)=>{
+    const handleDelete=async(data:any)=>{
       setBrandId(data?._id) ;
        setBrandName(data?.name)
       setIsModalOpen(true)

@@ -8,8 +8,13 @@ import { TBrandData } from "@/types";
 import Link from "next/link";
 
 const Brand = async() => {
-    const  {data : brands } = await getAllBrand();
-   
+  let brands:any = [];
+  try {
+    const  res = await getAllBrand();
+    brands=res?.data || [] ;
+  } catch (error:any) {
+      console.log(error) ;
+  }
      
     return (
          <NHContainer className='my-20'>
@@ -23,7 +28,7 @@ const Brand = async() => {
        </Link>
       </div>
       <div className="grid grid-cols-4 gap-6 my-10 ">
-        {brands?.slice(0, 4)?.map((brand: TBrandData, idx: number) => (
+        {brands?.slice(0, 6)?.map((brand: TBrandData, idx: number) => (
           <div className="bg-white p-3 rounded-xl" key={idx}>
             <div className="bg-gray-100 p-2 rounded-xl h-30 w-full  flex flex-col justify-center items-center">
              <div>

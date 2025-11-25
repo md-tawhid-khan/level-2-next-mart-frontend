@@ -2,7 +2,7 @@
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers"
 
-export const addFlashSales=async(data)=>{
+export const addFlashSales=async(data:any)=>{
     try {
          const res=await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/flash-sale`,
             {

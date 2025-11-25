@@ -23,7 +23,7 @@ const DiscountModal = ({selectProductId,setSelectProductId}:TModalProps) => {
 
     const {formState:{isSubmitting}}=form;
        
-    const onSubmit=async(data)=>{
+    const onSubmit=async(data:any)=>{
         const modifiedData={
             products:[...selectProductId] ,
             discountPercentage:parseFloat(data?.discountPercentage),

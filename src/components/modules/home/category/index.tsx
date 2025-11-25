@@ -7,7 +7,13 @@ import Link from 'next/link';
 import React from 'react';
 
 const Category = async() => {
-     const { data: categories } = await getAllCategories();
+      let categories = [];
+  try {
+    const res = await getAllCategories();
+    categories = res?.data || [];
+  } catch (err) {
+    console.error('Category fetch error:', err);
+  }
     return (
          <NHContainer className='my-20'>
       <div className="flex items-center justify-between ">
@@ -20,7 +26,7 @@ const Category = async() => {
       </div>
       <div className="grid grid-cols-6 gap-8 my-5">
         {
-          categories.slice(0,6).map((category: ICategory, idx: number) => (
+          categories?.slice(0,6).map((category: ICategory, idx: number) => (
             <CategoryCard key={idx} category={category} />
           ))}
       </div>

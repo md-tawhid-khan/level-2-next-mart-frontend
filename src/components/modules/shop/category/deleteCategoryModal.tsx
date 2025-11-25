@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 
 
 
-const DeleteCategoryModal =({isOpen,onOpenChange,categoryName,onConfirm,isLoading}) => {
+const DeleteCategoryModal =({isOpen,onOpenChange,categoryName,onConfirm,isLoading}:{isOpen:any,onOpenChange:any,categoryName:any,onConfirm:any,isLoading:boolean}) => {
    
     return (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>

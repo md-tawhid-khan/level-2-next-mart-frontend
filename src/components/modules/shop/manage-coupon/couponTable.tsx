@@ -53,10 +53,10 @@ const CouponTable = ({
           aria-label="Select all"
         />
       ),
-      cell: ({ row }) => (
+      cell: ({ row }:{row:any}) => (
         <Checkbox
           checked={row.getIsSelected()}
-          onCheckedChange={(value) => {
+          onCheckedChange={(value:any) => {
             if (value) {
               setSelectedProductsId([...selectedProductsId, row.original._id]);
             } else {
@@ -126,7 +126,7 @@ const CouponTable = ({
     {
       accessorKey: "action",
       header: "Action",
-      cell: ({ row }) => (
+      cell: ({ row }:{row:any}) => (
         <div className="flex items-center space-x-3">
           <button
             className="text-gray-500 hover:text-blue-500"

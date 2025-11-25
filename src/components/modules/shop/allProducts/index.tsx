@@ -17,11 +17,11 @@ const ManageProducts= ({products,meta}:{products:TPorduct[],meta:TMeta}) => {
   const [selectProductId , setSelectProductId]=useState<string[] | []>([])
    const router=useRouter()
 
-    const handleView=(data)=>{
+    const handleView=(data:any)=>{
         console.log('this is handle view',data)
     }
 
-    const handleDelete=(data)=>{
+    const handleDelete=(data:any)=>{
       console.log('handle product delete ',data)
     }
 

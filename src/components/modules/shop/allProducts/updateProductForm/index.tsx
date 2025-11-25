@@ -19,7 +19,7 @@ import {  useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-const UpdateProductForm = ({product}) => {
+const UpdateProductForm = ({product}:{product:any}) => {
 
    const router=useRouter()
 
@@ -41,10 +41,10 @@ const UpdateProductForm = ({product}) => {
       brand: product?.brand?.name || "",
       stock:product?.stock || "",
       weight:product?.weight || "",
-      availableColors: product?.availableColors?.map((color) => ({
+      availableColors: product?.availableColors?.map((color:any) => ({
         value: color,
       })) || [{ value: "" }],
-      keyFeatures:product?.keyFeatures.map((feature)=>({value:feature})) || [{ value: "" }],
+      keyFeatures:product?.keyFeatures.map((feature:any)=>({value:feature})) || [{ value: "" }],
       
       specification:  Object.entries(product?.specification || {}).map(
         ([key, value]) => ({ key, value })
@@ -419,7 +419,7 @@ const UpdateProductForm = ({product}) => {
                     <FormItem>
                       <FormLabel>Feature Description {index + 1}</FormLabel>
                       <FormControl>
-                        <Input {...field} value={field.value || ""} />
+                        <Input {...field} value={field.value as string | number || ""} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

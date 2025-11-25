@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 
-export const DeleteBrandModal=({isOpen,onOpenChange,categoryName,onConfirm,isLoading})=>{
+export const DeleteBrandModal=({isOpen,onOpenChange,categoryName,onConfirm,isLoading}:{isOpen:boolean,onOpenChange:any,categoryName:any,onConfirm:any,isLoading:boolean})=>{
 
 
     return (
