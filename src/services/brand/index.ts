@@ -57,5 +57,8 @@ export const CreateBrand=async(data:FormData)=>{
       }) ;
        revalidateTag("brand")
       return res.json();
-   }
+   } ;
+
+   // get specific brand product 
+   
 
