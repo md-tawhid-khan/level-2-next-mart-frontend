@@ -57,7 +57,7 @@ console.log(meta) ;
                 src={brand?.logo}
                 width={50}
                 height={50}
-                alt="category icon"
+                alt="brand icon"
                 className="mx-auto h-full w-full object-contain"
               />
              </div>
@@ -78,29 +78,7 @@ console.log(meta) ;
       <CarouselNext />
     </Carousel>
 
-    {/* use non cursor */}
-      {/* <div className="grid grid-cols-4 gap-6 my-10 ">
-        {brands?.slice(0, 6)?.map((brand: TBrandData, idx: number) => (
-          <div className="bg-white p-3 rounded-xl" key={idx}>
-            <Link href={`/brand/${brand._id}`}>
-            
-            <div className="bg-gray-100 p-2 rounded-xl h-30 w-full  flex flex-col justify-center items-center">
-             <div>
-                 <Image
-                src={brand?.logo}
-                width={50}
-                height={50}
-                alt="category icon"
-                className="mx-auto h-full w-full object-contain"
-              />
-             </div>
-              <h1 className="text-3xl font-bold">{brand.name}</h1>
-            </div>
-           
-            </Link>
-          </div>
-        ))}
-      </div> */}
+    
     </NHContainer>
     );
 };

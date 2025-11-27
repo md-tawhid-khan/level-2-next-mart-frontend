@@ -46,7 +46,8 @@ const SidebarFilter = () => {
   const handleSearchQuery=(query:string,value:string | number)=>{
     const params=new URLSearchParams(searchParams.toString())
     params.set(query,value.toString())
-     router.push(`${pathname}?${params}`,{scroll:false}) ;
+    //  router.push(`${pathname}?${params}`,{scroll:false}) ;
+    router.push(`${process.env.NEXT_PUBLIC_ROOT_API}/products?${params}`,{scroll:false}) ;
   } 
 
   const ratings = [5, 4, 3, 2, 1];
