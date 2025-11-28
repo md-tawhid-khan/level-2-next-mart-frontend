@@ -79,7 +79,7 @@ const handleLogOut=async()=>{
   <DropdownMenuContent>
     <DropdownMenuLabel>My Account</DropdownMenuLabel>
     <DropdownMenuSeparator />
-    <DropdownMenuItem>Profile</DropdownMenuItem>
+    <DropdownMenuItem><Link href={"/myProfile"}>Profile</Link></DropdownMenuItem>
     <DropdownMenuItem><Link href={`/${user?.role}/dashboard`}>dashboard</Link></DropdownMenuItem>
     <DropdownMenuItem>my shop</DropdownMenuItem>
     <DropdownMenuSeparator />
