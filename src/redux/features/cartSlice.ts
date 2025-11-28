@@ -245,7 +245,13 @@ export const discountAmountSelector=(state:RootState)=>{
 
 export const shopSelector=(state:RootState)=>{
   return state.cart.shopId
-}
+} ;
+
+export const cartCountSelector = (state: RootState) => {
+  return state.cart.products.reduce((total, product) => {
+    return total + product.orderQuantity;
+  }, 0);
+};
 
 export const {addProduct,incrementOrderQuantity,decrementOrderQuantity,removeProduct,updateCity,updateShippingAddress,clearCart}=cartSlice.actions
 
