@@ -14,14 +14,25 @@ import { TPorduct } from "@/types";
 import { useAppDispatch } from "@/redux/hooks";
 import { addProduct } from "@/redux/features/cartSlice";
 import { currencyFormater } from "@/lib/currencyFormater";
+import { useRouter } from "next/navigation";
 
 
 
 const ProductCard = ({product}:{product:TPorduct}) => {
   const dispatch=useAppDispatch()
+  const router = useRouter() ;
+
   const handleAddProduct=(product:TPorduct)=>{
     dispatch(addProduct(product))
+  } ;
+   
+  const handleBuyProduct=(product:TPorduct)=>{
+    dispatch(addProduct(product)) ;
+    router.push('/cart') ;
+    // console.log("handle buy product",product) ;
   }
+
+
     return (
           <Card className="p-3 h-36">
       <CardHeader className="relative p-0 h-48 ">
@@ -78,10 +89,11 @@ const ProductCard = ({product}:{product:TPorduct}) => {
       <CardFooter className="block p-0">
         <div className="flex gap-2 items-center justify-between">
           <Button
+          onClick={()=>handleBuyProduct(product)}
             disabled={product?.stock === 0}
             size="sm"
             variant="outline"
-            className="w-32"
+            className="w-32 cursor-pointer"
           > Buy Now
           </Button>
           <Button
@@ -89,14 +101,14 @@ const ProductCard = ({product}:{product:TPorduct}) => {
             disabled={product?.stock === 0}
             variant="outline"
             size="sm"
-            className="w-8 h-8 p-0 flex items-center justify-center rounded-full"
+            className="w-8 h-8 p-0 flex items-center justify-center rounded-full cursor-pointer"
           >
             <ShoppingCart />
           </Button>
            <Button
             variant="outline"
             size="sm"
-            className="w-8 h-8 p-0 flex items-center justify-center rounded-full"
+            className="w-8 h-8 p-0 flex items-center justify-center rounded-full cursor-pointer"
           >
             <Heart />
           </Button>
