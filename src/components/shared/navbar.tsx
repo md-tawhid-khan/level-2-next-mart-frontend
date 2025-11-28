@@ -20,6 +20,7 @@ import {  logout } from "@/services/authServices";
 import { useUser } from "@/context/userContext";
 import { usePathname, useRouter } from "next/navigation";
 import { privateRoutes } from "@/constant";
+import SearchTerm from "../modules/searchTerm/searchTerm";
 
 
 
@@ -29,6 +30,10 @@ export default function Navbar() {
   const pathname=usePathname();
   const router=useRouter();
 
+ const handleSearchTearm =async(e)=>{
+      e.preventDefault()
+      console.log(e.target.value) ;
+ }
   
   
 
@@ -48,13 +53,21 @@ const handleLogOut=async()=>{
           Next Mart
         </h1>
         {/*-------------- search bar ---------- */}
-        <div className="max-w-md  flex-grow">
+        <SearchTerm/>
+        {/* <form onSubmit={handleSearchTearm}>
+          <div className="join max-w-md  flex-grow ">
+  <input className="input join-item w-full max-w-6xl border border-gray-300 rounded-l-full py-2 px-5" placeholder="Search for products" type="text" />
+  <button type="submit" className="btn join-item rounded-r-full">Search</button>
+</div>
+</form> */}
+        {/* <div className="max-w-md  flex-grow ">
           <input
             type="text"
             placeholder="Search for products"
             className="w-full max-w-6xl border border-gray-300 rounded-full py-2 px-5"
           />
-        </div>
+          <Button> search</Button>
+        </div> */}
         {/* ---------- cart and longing section ------------*/}
         <nav className="flex gap-2">
           <Button variant="outline" className="rounded-full p-0 size-10">

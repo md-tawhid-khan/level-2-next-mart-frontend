@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
-import CategoryCard from '@/components/ui/core/CategoryCard';
+
 import NHContainer from '@/components/ui/core/NHContainer';
 import { getAllCategories } from '@/services/category';
 import { ICategory } from '@/types';
@@ -18,7 +18,6 @@ const Category = async() => {
     console.error('Category fetch error:', err);
   }
 
-  console.log("category", categories[0]) ;
     return (
          <NHContainer className='my-20'>
       <div className="flex items-center justify-between ">

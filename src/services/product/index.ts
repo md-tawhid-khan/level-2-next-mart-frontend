@@ -88,4 +88,22 @@ export const getSingleProduct=async(productId:string)=>{
     } catch (error) {
          console.log(error)
     }
+} ;
+
+export const getSearchTermProducts=async(queryData:string)=>{
+  try {
+    const res=await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/product?searchTerm=${queryData}`,
+      {
+        method:"GET",
+        next: {
+          tags: ["PRODUCT"],
+        },
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error) {
+     console.log(error) ;
+  }
 }
