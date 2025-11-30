@@ -20,7 +20,7 @@ const Brand = async() => {
       console.log(error) ;
   }
 
-console.log(meta) ;
+
      
     return (
          <NHContainer className='my-20 '>
