@@ -19,7 +19,7 @@ import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner";
 
-const ImageUpdateModal = ({ profile }) => {
+const ImageUpdateModal = ({ profile }:any) => {
   const [isOpen, onOpenChange] = useState(false);
 
   const form = useForm({
@@ -35,7 +35,7 @@ const ImageUpdateModal = ({ profile }) => {
   const {formState:{isSubmitting}} = form ;
 
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data:any) => {
     const bodyData={
       gender: profile?.profile?.gender || "",
     phoneNo: profile?.profile?.phoneNo || "",

@@ -81,7 +81,7 @@ const handleLogOut=async()=>{
     <DropdownMenuSeparator />
     <DropdownMenuItem><Link href={"/myProfile"}>Profile</Link></DropdownMenuItem>
     <DropdownMenuItem><Link href={`/${user?.role}/dashboard`}>dashboard</Link></DropdownMenuItem>
-    <DropdownMenuItem>my shop</DropdownMenuItem>
+    <DropdownMenuItem><Link href={"/myshop"}>my shop</Link></DropdownMenuItem>
     <DropdownMenuSeparator />
     <DropdownMenuItem className="bg-red-500 cursor-pointer" onClick={handleLogOut}>
       <LogOut/>log out

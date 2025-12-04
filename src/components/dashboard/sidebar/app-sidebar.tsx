@@ -70,7 +70,7 @@ const data = {
       items: [
         {
           title: "Profile",
-          url: "/profile",
+          url: "/myProfile",
         },
         
       ],

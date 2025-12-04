@@ -17,7 +17,7 @@ import { SquarePen } from "lucide-react"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 
-export function ProfileUpdateModal({profile}) {
+export function ProfileUpdateModal({profile}:any) {
    const [isOpen, IsOpenChange]= useState(false)
    const form = useForm({
   defaultValues: {
@@ -30,7 +30,7 @@ export function ProfileUpdateModal({profile}) {
 }) ;
    const {formState:{isSubmitting}}=form ;
 
-   const onSubmit =async (data) =>{
+   const onSubmit =async (data:any) =>{
     const formData=new FormData()
      formData.append('data',JSON.stringify(data)) ;
     // console.log(Object.fromEntries(formData.entries()));
@@ -66,7 +66,7 @@ export function ProfileUpdateModal({profile}) {
               name="gender"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Gender</FormLabel>
+                  <FormLabel>Gender(first word Capital letter)</FormLabel>
                   <FormControl className="mx-auto ">
                     <Input
                       className="text-black bg-white"
@@ -77,7 +77,7 @@ export function ProfileUpdateModal({profile}) {
                     />
                   </FormControl>
 
-                  <FormMessage />
+                  <FormMessage>must use first word capital letter</FormMessage>
                 </FormItem>
               )}
             />
