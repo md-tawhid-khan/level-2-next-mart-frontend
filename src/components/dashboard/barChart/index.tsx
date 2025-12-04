@@ -21,24 +21,51 @@ export function ChartBarDefault({barChartData}:any) {
  let chartData:any[]=[];
  let chartConfig:Record<string,any> = {} ;
   if(barChartData.length){
-
    chartData = barChartData.map((order:any)=>({
       month:order?.month ,
       totalOrders:order?.totalOrders ,
-   }))
+   })) ;
 
+   chartConfig = {
+  totalSales: {
+    label: "Visitors",
+    color: "var(--chart-2)",
+  },
+  chrome: {
+    label: "Chrome",
+    color: "var(--chart-1)",
+  },
+  safari: {
+    label: "Safari",
+    color: "var(--chart-2)",
+  },
+  firefox: {
+    label: "Firefox",
+    color: "var(--chart-3)",
+  },
+  edge: {
+    label: "Edge",
+    color: "var(--chart-4)",
+  },
+  other: {
+    label: "Other",
+    color: "var(--chart-5)",
+  },
+} satisfies ChartConfig ;
+
+   
   } else {
          chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
+  { month: "January", totalOrders: 186 },
+  { month: "February", totalOrders: 305 },
+  { month: "March", totalOrders: 237 },
+  { month: "April", totalOrders: 73 },
+  { month: "May", totalOrders: 209 },
+  { month: "June", totalOrders: 214 },
 ]
  chartConfig = {
-  desktop: {
-    label: "Desktop",
+  totalOrders: {
+    label: "totalOrders",
     color: "var(--chart-1)",
   },
 } satisfies ChartConfig
@@ -68,7 +95,7 @@ export function ChartBarDefault({barChartData}:any) {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={8} />
+            <Bar dataKey="totalOrders" fill="var(--color-desktop,var(--chart-1))" radius={8} />
           </BarChart>
         </ChartContainer>
       </CardContent>
