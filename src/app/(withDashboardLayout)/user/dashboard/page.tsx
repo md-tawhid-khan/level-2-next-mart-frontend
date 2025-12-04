@@ -1,11 +1,11 @@
-import { ChartBarDefault } from "@/components/dashboard/barChart";
-import { ChartLineDotsColors } from "@/components/dashboard/lineChart";
-import OrderData from "@/components/dashboard/orderData";
-import { ChartPieLabelList } from "@/components/dashboard/pieChart";
-import TodaysSalesAmount from "@/components/dashboard/todaysSalesAmount";
-import TotalOrdersForUser from "@/components/dashboard/totalOrderForUser";
-import TotalPayment from "@/components/dashboard/totalPayment";
-import TotalRevenueForUser from "@/components/dashboard/totalRevenueForUser";
+import { ChartBarDefault } from "@/components/dashboard/userDashboard/barChart";
+import { ChartLineDotsColors } from "@/components/dashboard/userDashboard/lineChart";
+import OrderData from "@/components/dashboard/userDashboard/orderData";
+import { ChartPieLabelList } from "@/components/dashboard/userDashboard/pieChart";
+import TodaysSalesAmount from "@/components/dashboard/userDashboard/todaysSalesAmount";
+import TotalOrdersForUser from "@/components/dashboard/userDashboard/totalOrderForUser";
+import TotalPayment from "@/components/dashboard/userDashboard/totalPayment";
+import TotalRevenueForUser from "@/components/dashboard/userDashboard/totalRevenueForUser";
 import { getMetaData } from "@/services/dashboard";
 
 const DashboardPage =async() => {

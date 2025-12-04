@@ -28,7 +28,7 @@ const ImageUpdateModal = ({ profile }:any) => {
     phoneNo: profile?.profile?.phoneNo || "",
     dateOfBirth: profile?.profile?.dateOfBirth || "",
     address: profile?.profile?.address || "",
-      photo:profile.profile.photo || ""
+      photo:profile?.profile?.photo || ""
     }
   });
 

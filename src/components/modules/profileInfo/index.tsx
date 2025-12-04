@@ -1,5 +1,5 @@
 "use client"
-import { SquarePen } from 'lucide-react';
+
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { ProfileUpdateModal } from './profileUpdateModal';
@@ -25,6 +25,7 @@ const ProfileInfo = ({profile}:any) => {
   <ImageUpdateModal profile={profile}/>
 </div>
             }
+            
             <div className='flex gap-2'>
                 <h1>name : {profile?.name} </h1>
                 <ProfileUpdateModal profile={profile}/>
