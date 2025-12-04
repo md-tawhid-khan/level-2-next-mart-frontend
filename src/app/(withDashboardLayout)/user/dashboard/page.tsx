@@ -1,3 +1,4 @@
+import { ChartBarDefault } from "@/components/dashboard/barChart";
 import { ChartPieLabelList } from "@/components/dashboard/pieChart";
 import { getMetaData } from "@/services/dashboard";
 
@@ -9,7 +10,7 @@ const DashboardPage =async() => {
          <div>
       <div className="grid auto-rows-min gap-4 md:grid-cols-3">
         <div className="aspect-video rounded-xl bg-muted " ><ChartPieLabelList pieChartData={pieChartData}/></div>
-        <div className="aspect-video rounded-xl bg-muted" />
+        <div className="aspect-video rounded-xl bg-muted" ><ChartBarDefault barChartData={barChartData}/></div>
         <div className="aspect-video rounded-xl bg-muted" />
       </div>
       <div className="min-h-[100vh] rounded-xl bg-muted mt-4" />
