@@ -10,6 +10,7 @@ export interface ICartProduct extends TPorduct {
 
 interface InitialState {
       products:ICartProduct[];
+      wishlist: TPorduct[];
       city:string;
       shippingAddress:string;
       color:string;
@@ -24,6 +25,7 @@ interface InitialState {
 }
 const initialState:InitialState={
     products:[],
+    wishlist: [],
     city:'',
     shippingAddress:'',
     color:'',
@@ -107,13 +109,26 @@ const cartSlice=createSlice({
                return ;
            }
             const productToAdd=state.products.find((product)=>product?._id==action.payload._id)
-
+                
             if(productToAdd){
                 productToAdd.orderQuantity += 1;
                 return ;
             }
             state.products.push({ ...action.payload, orderQuantity: 1 });
         },
+
+       heartProduct: (state, action) => {
+  const product = action.payload;
+  const exists = state.wishlist.find((p) => p._id === product._id);
+
+  if (exists) {
+    // Remove from wishlist
+    state.wishlist = state.wishlist.filter((p) => p._id !== product._id);
+  } else {
+    // Add to wishlist
+    state.wishlist.push(product);
+  }
+},
 
         incrementOrderQuantity:(state,action)=>{
             const productToIncrement=state.products.find(product=>product._id==action.payload)
@@ -253,6 +268,14 @@ export const cartCountSelector = (state: RootState) => {
   }, 0);
 };
 
-export const {addProduct,incrementOrderQuantity,decrementOrderQuantity,removeProduct,updateCity,updateShippingAddress,clearCart}=cartSlice.actions
+export const heartCountSelector = (state: RootState) => {
+  return state.cart.wishlist.length;
+};
+
+export const loveProductSelector=(state:RootState)=>{
+     return state.cart.wishlist ;
+}
+
+export const {addProduct,incrementOrderQuantity,decrementOrderQuantity,removeProduct,updateCity,updateShippingAddress,clearCart,heartProduct}=cartSlice.actions
 
 export default cartSlice.reducer ;

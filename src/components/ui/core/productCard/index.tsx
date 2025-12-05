@@ -12,7 +12,7 @@ import Link from "next/link";
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import { TPorduct } from "@/types";
 import { useAppDispatch } from "@/redux/hooks";
-import { addProduct } from "@/redux/features/cartSlice";
+import { addProduct, heartProduct } from "@/redux/features/cartSlice";
 import { currencyFormater } from "@/lib/currencyFormater";
 import { useRouter } from "next/navigation";
 
@@ -24,6 +24,10 @@ const ProductCard = ({product}:{product:TPorduct}) => {
 
   const handleAddProduct=(product:TPorduct)=>{
     dispatch(addProduct(product))
+  } ;
+  const handleHeartProduct=(product:TPorduct)=>{
+    dispatch(heartProduct(product))
+    
   } ;
    
   const handleBuyProduct=(product:TPorduct)=>{
@@ -106,6 +110,7 @@ const ProductCard = ({product}:{product:TPorduct}) => {
             <ShoppingCart />
           </Button>
            <Button
+           onClick={()=>handleHeartProduct(product)}
             variant="outline"
             size="sm"
             className="w-8 h-8 p-0 flex items-center justify-center rounded-full cursor-pointer"

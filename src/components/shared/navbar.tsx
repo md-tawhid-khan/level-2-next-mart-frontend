@@ -22,7 +22,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { privateRoutes } from "@/constant";
 import SearchTerm from "../modules/searchTerm/searchTerm";
 import { useAppSelector } from "@/redux/hooks";
-import { cartCountSelector } from "@/redux/features/cartSlice";
+import { cartCountSelector, heartCountSelector } from "@/redux/features/cartSlice";
 
 
 
@@ -33,7 +33,7 @@ export default function Navbar() {
   const router=useRouter();
 
  const selector = useAppSelector(cartCountSelector);
- 
+ const heartCount = useAppSelector(heartCountSelector) ;
 
 const handleLogOut=async()=>{
   await logout()
@@ -55,9 +55,12 @@ const handleLogOut=async()=>{
        
         {/* ---------- cart and longing section ------------*/}
         <nav className="flex gap-2">
-          <Button variant="outline" className="rounded-full p-0 size-10 cursor-pointer">
+          <Link href={'/heart'}>
+          <Button variant="outline" className="rounded-full p-0 size-10 cursor-pointer indicator">
             <Heart />
+             <span className="badge badge-sm indicator-item text-blue-300 text-xl">{heartCount}</span>
           </Button>
+          </Link>
           <Link href='/cart'>
           <Button  variant="outline" className="rounded-full p-0 size-10 cursor-pointer indicator">
             <ShoppingBag />

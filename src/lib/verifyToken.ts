@@ -22,7 +22,7 @@ export const getValidToken=async():Promise<string>=>{
     if(!token || await isTokenExpire(token)){
         const {data}=await getNewAccessToken();
         token=data?.accessToken ;
-        cookiesStore.set("accessToken",token)
+        cookiesStore?.set("accessToken",token)
     }
     return token 
 }

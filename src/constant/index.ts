@@ -1,4 +1,4 @@
-export const privateRoutes=['/login','/create-shop','/admin','/admin/:page','/user','/user/:page']
+export const privateRoutes=['/login','/create-shop','/admin','/admin/:page','/user','/user/:page','/myshop','/myProfile',]
 
 export const cities = [
   "Barisal",
