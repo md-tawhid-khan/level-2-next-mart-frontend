@@ -30,7 +30,7 @@ const ContactForm = () => {
     <div className='bg-amber-50 p-6 m-14 '>
     <Form {...form}>
     
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-5'>
       {/* register your input into the hook by invoking the "register" function */}
      <div className='grid grid-cols-2 gap-4'>
          <FormField
