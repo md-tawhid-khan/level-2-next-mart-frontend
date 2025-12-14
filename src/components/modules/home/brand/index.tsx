@@ -45,7 +45,7 @@ const Brand = async() => {
         {brands.map((brand:TBrandData, index:number) => (
           <CarouselItem key={index} className="basis-1/2 md:basis-1/3 lg:basis-1/5 ">
             <div className="p-1">
-               <Link href={`/brand/${brand._id}`}>
+               <Link href={`/products?brand=${brand._id}`}>
               <Card>
                 <CardContent >
                    <div className="bg-white p-3 rounded-xl" >

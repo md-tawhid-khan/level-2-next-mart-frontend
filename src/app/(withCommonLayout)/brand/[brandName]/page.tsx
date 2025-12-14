@@ -8,7 +8,7 @@ import React from 'react';
 const DynamicBrandProduct =async ({params}:any) => {
     const {brandName} = await params ;
    const products= await getAllProducts('_','_',{brand:`${brandName}`}) ;
-   console.log(products) ;
+//    console.log(products) ;
 
     return (
         <div>
