@@ -10,11 +10,14 @@ import { getMetaData } from "@/services/dashboard";
 
 const DashboardPage =async() => {
     const metaData = await getMetaData() ;
-   const {barChartData ,lineChartData,orderData,paymentData,pieChartData,todaysSalesAmount,totalOrdersForUser,totalRevenueForUser}=metaData?.data ;
+    
+   const {barChartData ,lineChartData,orderData,paymentData,pieChartData,todaysSalesAmount,totalOrdersForUser,totalRevenueForUser}=metaData?.data || [] ;
     
     return (
          <div>
-      <div className="grid auto-rows-min gap-4 md:grid-cols-3">
+         {
+         metaData.length ? <div>
+          <div className="grid auto-rows-min gap-4 md:grid-cols-3">
         <div className="aspect-video rounded-xl bg-muted " ><ChartPieLabelList pieChartData={pieChartData}/></div>
         <div className="aspect-video rounded-xl bg-muted" ><ChartBarDefault barChartData={barChartData}/></div>
         <div className="aspect-video rounded-xl bg-muted" ><ChartLineDotsColors lineChartData={lineChartData}/></div>
@@ -29,6 +32,9 @@ const DashboardPage =async() => {
         </div>
         
       </div>
+         </div> : <div className="min-h-screen flex justify-center items-center "> <h1 className="text-3xl font-bold text-blue-400">You Have No Shop Data </h1> </div>
+         }
+      
     </div>
     );
 };

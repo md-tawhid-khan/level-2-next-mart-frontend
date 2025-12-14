@@ -15,7 +15,7 @@ export const createCoupon=async(couponData:TCoupon)=>{
             },
             body:JSON.stringify(couponData)
         })
-        revalidateTag("COUPON")
+        revalidateTag("COUPON","page")
         return await res.json()
     } catch (error) {
         console.log(error)

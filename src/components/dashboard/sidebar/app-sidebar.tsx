@@ -38,7 +38,12 @@ const data = {
       url: "/user/dashboard",
       icon: SquareTerminal,
       isActive: true,
-      
+      items:[
+        {
+          title: "Dashboard",
+          url: "/user/dashboard",
+        }
+      ]
     },
     {
       title: "shop",

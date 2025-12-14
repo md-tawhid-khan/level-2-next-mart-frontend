@@ -14,7 +14,7 @@ export const addFlashSales=async(data:any)=>{
                 body:JSON.stringify(data)
             }
          );
-         revalidateTag('PRODUCT')
+         revalidateTag('PRODUCT',"page")
        return await res.json()
     } catch (error) {
         console.log(error)

@@ -15,7 +15,7 @@ const createCategory=async(data:FormData)=>{
         },
         body:data
      }) ;
-    revalidateTag('categories')
+    revalidateTag('categories',"page")
      const  result = await res.json()
 
      return result
@@ -48,6 +48,6 @@ export const deleteSingleCategory=async(id:string )=>{
          Authorization:token 
       }
    }) ;
-    revalidateTag('categories')
+    revalidateTag('categories',"page")
    return res.json();
 }

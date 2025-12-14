@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import NHContainer from "@/components/ui/core/NHContainer";
 import ProductCard from "@/components/ui/core/productCard";
 import { getAllProducts } from "@/services/product";
@@ -23,12 +25,30 @@ const FeaturesProducts = async() => {
             </Button>
           </Link>
         </div>
-          <div className="grid grid-cols-5 gap-8 my-5">
+      {/* use carosal  */}
+      <Carousel
+      opts={{
+        align: "start",
+      }}
+      className="mx-16"
+    >
+       <CarouselContent>
+        {
+        products.map((product:any, index:number) => (
+          <ProductCard key={index} product={product} />
+        )
+      )}
+      </CarouselContent>
+      <CarouselPrevious />
+      <CarouselNext/>
+    </Carousel>
+        {/* use without curosal */}
+          {/* <div className="grid grid-cols-5 gap-8 my-5">
           {
             products?.slice(0,5)?.map((product:any, idx: number) => (
               <ProductCard key={idx} product={product} />
             ))}
-        </div>
+        </div> */}
       </NHContainer>
     </div>
     );

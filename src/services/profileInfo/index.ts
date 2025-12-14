@@ -33,7 +33,7 @@ export const updateProfileInfo = async (data:any) =>{
     },
     body:data 
   })
-  revalidateTag("profile") ;
+  revalidateTag("profile","page") ;
   return update.json() ;
  } catch (error) {
      console.log(error) ;

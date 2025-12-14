@@ -48,7 +48,7 @@ export const addProduct = async (productData: FormData): Promise<any> => {
       },
       
     });
-    revalidateTag("PRODUCT");
+    revalidateTag("PRODUCT","max");
     return await res.json();
   } catch (error: any) {
     return Error(error);
@@ -65,14 +65,12 @@ export const updateProduct=async(productData:FormData,
         },
         body:productData
        })
-       revalidateTag("PRODUCT")
+       revalidateTag("PRODUCT","page")
        return await res.json()
  } catch (error) {
    console.log(error)
  }
 } 
-
-
 
 
 export const getSingleProduct=async(productId:string)=>{
@@ -106,4 +104,49 @@ export const getSearchTermProducts=async(queryData:string)=>{
   } catch (error) {
      console.log(error) ;
   }
+}
+
+export const getMyShopProducts = async()=>{
+     try {
+      const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/product/my-shop-products`,
+      {
+        method:"GET",
+        headers: {
+        Authorization: (await cookies()).get("accessToken")!.value,
+      },
+        next: {
+          tags: ["PRODUCT"],
+        },
+      }
+    );
+    const data = await res.json();
+    return data;
+  } catch (error: any) {
+    return Error(error?.message);
+     } 
+} ;
+
+export const deleteMyShopProduct = async(productId : string )=>{
+  
+  try {
+    
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_API}/product/${productId}`,
+      {
+        method:"DELETE",
+        headers: {
+        Authorization: (await cookies()).get("accessToken")!.value,
+      },
+      }
+    );
+    revalidateTag("PRODUCT","max");
+    const data = await res.json();
+    
+    return data;
+    
+  } catch (error:any) {
+     return Error(error?.message)
+  }
+
 }

@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import DiscountModal from "./discountModal";
 import TablePagination from "@/components/ui/core/NHTable/tablePagination";
+import { deleteMyShopProduct } from "@/services/product";
+import { toast } from "sonner";
 
 
 
@@ -21,8 +23,15 @@ const ManageProducts= ({products,meta}:{products:TPorduct[],meta:TMeta}) => {
         console.log('this is handle view',data)
     }
 
-    const handleDelete=(data:any)=>{
-      console.log('handle product delete ',data)
+    const handleDelete=async(data:any)=>{
+      console.log('handle product delete',data)
+      const result = await deleteMyShopProduct(data) ;
+      if (result.success) {
+        toast.success(result.message);
+        router.push("/user/shop/all-products");
+      } else {
+        toast.error(result.message);
+      }
     }
 
     const columns = [

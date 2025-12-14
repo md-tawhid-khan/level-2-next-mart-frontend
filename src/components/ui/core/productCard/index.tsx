@@ -8,6 +8,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {Button }from "@/components/ui/button";
+import { Toggle } from "@/components/ui/toggle";
 import Link from "next/link";
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import { TPorduct } from "@/types";
@@ -36,9 +37,9 @@ const ProductCard = ({product}:{product:TPorduct}) => {
     // console.log("handle buy product",product) ;
   }
 
-
-    return (
-          <Card className="p-3 h-36">
+  
+     return (
+          <Card className="p-3 ">
       <CardHeader className="relative p-0 h-48 ">
         <Image
           src={
@@ -109,14 +110,15 @@ const ProductCard = ({product}:{product:TPorduct}) => {
           >
             <ShoppingCart />
           </Button>
-           <Button
+           <Toggle
+           
            onClick={()=>handleHeartProduct(product)}
             variant="outline"
             size="sm"
-            className="w-8 h-8 p-0 flex items-center justify-center rounded-full cursor-pointer"
+            className="w-8 h-8 p-0 flex items-center justify-center rounded-full cursor-pointer data-[state=on]:bg-transparent data-[state=on]:*:[svg]:fill-blue-500 data-[state=on]:*:[svg]:stroke-blue-500"
           >
             <Heart />
-          </Button>
+          </Toggle>
         </div>
         </CardFooter>
     </Card>

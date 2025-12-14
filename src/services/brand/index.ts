@@ -19,7 +19,7 @@ export const CreateBrand=async(data:FormData)=>{
            body:data
         }) ;
    
-         revalidateTag("brand")
+         revalidateTag("brand","page")
         const  result = await res.json()
    
         return result
@@ -55,7 +55,7 @@ export const CreateBrand=async(data:FormData)=>{
             Authorization:token
          }
       }) ;
-       revalidateTag("brand")
+       revalidateTag("brand","page")
       return res.json();
    } ;
 
